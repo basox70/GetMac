@@ -36,7 +36,7 @@ strFolder = objFSO.GetParentFolderName(objFile)
 Dim Ip2Mac
 Set Ip2Mac = CreateObject("Scripting.Dictionary")
 
-' define address 
+' define address (format arr1[x].arr2[x].0.x)
 arr1=Array(59,99)
 arr2=Array(0,1,7,8,10,12,15)
 peripheralNb = 0
