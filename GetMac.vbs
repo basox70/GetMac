@@ -15,7 +15,6 @@ Rem wscript.exe //H:wscript
 
 ''''''''''''''''''''TODO'''''''''''''''''''''
 '                                           '
-' - choix de updater les MAC address        '
 ' - ajouter le nom des peripheriques        '
 ' - SI il y a d'autres idées, les ajouter   '
 '                                           '
@@ -83,9 +82,9 @@ Function printw(txt)
 	WScript.StdOut.WriteLine txt
 End Function
 
-if WScript.Arguments.Count = 0 then
+If WScript.Arguments.Count = 0 then
     WScript.Echo "Script defaut"
-else
+Else
 	For I=0 To WScript.Arguments.Count-1
 		Select Case WScript.Arguments(I)
 		Case "1"
@@ -98,14 +97,14 @@ else
 			Wscript.Quit
 		end Select
 	Next
-End IF
+End If
 
 Function help()
 	printw "parametres:"
 	printw "    - Renouveler adresses MAC : 1 (defaut = 0)"
 	printw "        exemple 'nom du script' 1"
 	printw "    - afficher cette aide : /h"
-End function
+End Function
 
 ' Afficher les parametres du script
 ' Display script parameters
@@ -343,7 +342,7 @@ End If
 
 result = wShell.run("cmd /K Date /t > "&File3&" "&Chr(38)&" exit",7,True)
 
-For Each elem In Ip2Mac 'formatage de la ligne puis ecriture dqns le fichier
+For Each elem In Ip2Mac 'formatage de la ligne puis ecriture dans le fichier
 	' printw "!"&Format(elem,11," ")&"!"
 	str = "  "&Format(elem,11," ")&"        "&Ip2Mac(elem)&vbCrLf
 	' printl "!"&str&"!"
