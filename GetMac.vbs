@@ -108,7 +108,7 @@ End Function
 
 ' Afficher les parametres du script
 ' Display script parameters
-printw "renouvellement adresses MAC : "&MAC
+printw "renouvellement adresses MAC : " & MAC
 
 ' Add arp request line into dictionary, without "static" / "dynamic" or "new" , key = ip, item = mac address
 ' Ajoute la requete arp dans le dictionnaire, sans "statique"/"dynamique"/"new", cle = ip, objet = Mac
