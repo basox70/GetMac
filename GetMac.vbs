@@ -60,18 +60,20 @@ tmp3800 = 0
 valid1 = false
 valid2 = false
 valid3 = false
-arr2800=Array(0,0,0,0,0,0,0,0,0,0)
-arr3800=Array(0,0,0,0,0,0,0,0,0,0)
-arr4800=Array(0,0,0,0,0,0,0,0,0,0)
+arr2800=Array(Null,Null,Null,Null,Null,Null,Null,Null,Null,Null)
+arr3800=Array(Null,Null,Null,Null,Null,Null,Null,Null,Null,Null)
+arr4800=Array(Null,Null,Null,Null,Null,Null,Null,Null,Null,Null)
 
 ' verif conditions arr1 - arr2
 for i=0 to UBound(arr2)
 	If arr2(i) = 800 or arr2(i) =900 then
 		arr2800(tmp1800) = i
-		tmp1 = tmp1 + 1
 		tmp1800 = tmp1800 + 1
+		tmp1 = tmp1 + 1
 	End If
 	if arr2(i)>800 and arr2(i)<900 then
+		arr2800(tmp1800) = i
+		tmp1800 = tmp1800 + 1
 		j = arr2(i)-800
 		tmp1 = tmp1 + j
 	End If
@@ -86,16 +88,20 @@ End If
 
 ' verif conditions arr2 - arr3
 if valid1 then
-	for each i in arr3
-		If i = 800 or i =900 then
+	for i=0 to UBound(arr3)
+		If arr3(i) = 800 or  arr3(i) =900 then
+			arr3800(tmp2800) = i
+			tmp2800 = tmp2800 + 1
 			tmp2 = tmp2 + 1
 		End If
-		if i>800 and i<900 then
-			j = i-800
+		if  arr3(i)>800 and  arr3(i)<900 then
+			arr3800(tmp2800) =  i
+			tmp2800 = tmp2800 + 1
+			j =  arr3(i)-800
 			tmp2 = tmp2 + j
 		End If
-		if i>900 and i<1000 then
-			j = i-900
+		if  arr3(i)>900 and  arr3(i)<1000 then
+			j =  arr3(i)-900
 			tmp2 = tmp2 + j
 		End If
 	Next
@@ -106,16 +112,20 @@ End If
 
 ' verif conditions arr3 - arr4
 if valid2 then
-	for each i in arr4
-		If i = 800 or i =900 then
+	for i=0 to UBound(arr4)
+		If arr4(i) = 800 or arr4(i) =900 then
+			arr4800(tmp3800) = i
+			tmp3800 = tmp3800 + 1
 			tmp3 = tmp3 + 1
 		End If
-		if i>800 and i<900 then
-			j = i-800
+		if arr4(i)>800 and arr4(i)<900 then
+			arr4800(tmp3800) = i
+			tmp3800 = tmp3800 + 1
+			j = arr4(i)-800
 			tmp3 = tmp3 + j
 		End If
-		if i>900 and i<1000 then
-			j = i-900
+		if arr4(i)>900 and arr4(i)<1000 then
+			j = arr4(i)-900
 			tmp3 = tmp3 + j
 		End If
 	Next
@@ -124,10 +134,35 @@ if valid2 then
 	End If
 End If
 
+
+text1 = ""
+text2 = ""
+text3 = ""
+
+for each i in arr2800
+	if i<>Null then
+		text1 = text1 & i & ","
+	End If
+Next
+for each i in arr3800
+	if i<>Null then
+		text2 = text2 & i & ","
+	End If
+Next
+for each i in arr4800
+	if i<>Null then
+		text3 = text3 & i & ","
+	End If
+Next
+
 valid = valid1 and valid2 and valid3
 printw (UBound(arr1)+1) & " | " & (UBound(arr2)+1) & " | " & (UBound(arr3)+1) & " | " & (UBound(arr4)+1)
 printw "tmp1 : "&tmp1 & " | tmp2 : " & tmp2 & " | tmp3 : " & tmp3
 printw valid &":"& valid1 & valid2 & valid3
+printw text1
+printw text2
+printw text3
+
 WScript.Quit
 
 peripheralNb = 0
