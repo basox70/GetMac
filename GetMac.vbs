@@ -60,18 +60,20 @@ tmp3800 = 0
 valid1 = false
 valid2 = false
 valid3 = false
-arr2800=Array(Null,Null,Null,Null,Null,Null,Null,Null,Null,Null)
-arr3800=Array(Null,Null,Null,Null,Null,Null,Null,Null,Null,Null)
-arr4800=Array(Null,Null,Null,Null,Null,Null,Null,Null,Null,Null)
+arr2800=Array()
+arr3800=Array()
+arr4800=Array()
 
 ' verif conditions arr1 - arr2
 for i=0 to UBound(arr2)
 	If arr2(i) = 800 or arr2(i) =900 then
+		ReDim Preserve arr2800(UBound(arr2800) + 1)
 		arr2800(tmp1800) = i
 		tmp1800 = tmp1800 + 1
 		tmp1 = tmp1 + 1
 	End If
 	if arr2(i)>800 and arr2(i)<900 then
+		ReDim Preserve arr2800(UBound(arr2800) + 1)
 		arr2800(tmp1800) = i
 		tmp1800 = tmp1800 + 1
 		j = arr2(i)-800
@@ -90,11 +92,13 @@ End If
 if valid1 then
 	for i=0 to UBound(arr3)
 		If arr3(i) = 800 or  arr3(i) =900 then
+			ReDim Preserve arr3800(UBound(arr3800) + 1)
 			arr3800(tmp2800) = i
 			tmp2800 = tmp2800 + 1
 			tmp2 = tmp2 + 1
 		End If
 		if  arr3(i)>800 and  arr3(i)<900 then
+			ReDim Preserve arr3800(UBound(arr3800) + 1)
 			arr3800(tmp2800) =  i
 			tmp2800 = tmp2800 + 1
 			j =  arr3(i)-800
@@ -114,11 +118,13 @@ End If
 if valid2 then
 	for i=0 to UBound(arr4)
 		If arr4(i) = 800 or arr4(i) =900 then
+			ReDim Preserve arr4800(UBound(arr4800) + 1)
 			arr4800(tmp3800) = i
 			tmp3800 = tmp3800 + 1
 			tmp3 = tmp3 + 1
 		End If
 		if arr4(i)>800 and arr4(i)<900 then
+			ReDim Preserve arr4800(UBound(arr4800) + 1)
 			arr4800(tmp3800) = i
 			tmp3800 = tmp3800 + 1
 			j = arr4(i)-800
@@ -140,33 +146,35 @@ text2 = ""
 text3 = ""
 
 for each i in arr2800
-	if i<>Null then
+	if i<>"" then
 		text1 = text1 & i & ","
 	End If
 Next
+text1 = text1 & UBound(arr2800)
 for each i in arr3800
-	if i<>Null then
+	if i<>"" then
 		text2 = text2 & i & ","
 	End If
 Next
+text2 = text2 & UBound(arr3800)
 for each i in arr4800
-	if i<>Null then
+	if i<>"" then
 		text3 = text3 & i & ","
 	End If
 Next
+text3 = text3 & UBound(arr4800)
 
 valid = valid1 and valid2 and valid3
-printw (UBound(arr1)+1) & " | " & (UBound(arr2)+1) & " | " & (UBound(arr3)+1) & " | " & (UBound(arr4)+1)
+printw (UBound(arr1)+1) & " | " & (UBound(arr2)+1)-(UBound(arr2800)+1) & " | " & (UBound(arr3)+1)-(UBound(arr3800)+1) & " | " & (UBound(arr4)+1)-(UBound(arr4800)+1)
 printw "tmp1 : "&tmp1 & " | tmp2 : " & tmp2 & " | tmp3 : " & tmp3
 printw valid &":"& valid1 & valid2 & valid3
 printw text1
 printw text2
 printw text3
 
-WScript.Quit
-
 peripheralNb = 0
-nb = ((UBound(arr1)+1)/2)*(UBound(arr2)+1)*25+((UBound(arr1)+1)/2)*(UBound(arr2)+1)*max+((UBound(arr1)+1)/2)*255 'nombre de boucle au total
+nb = (UBound(arr1)+1)*((UBound(arr2)+1)-(UBound(arr2800)+1))*((UBound(arr3)+1)-(UBound(arr3800)+1))*((UBound(arr4)+1)-(UBound(arr4800)+1)) 'nombre de boucle au total
+printw nb
 MAC = false
 
 FileContentStr = ""
@@ -383,34 +391,63 @@ REM BEGIN PING/ARP REQUEST / DEBUT REQUETES PING/ARP
 
 nbTotal = 0
 
-For Each i In arr1
-	
-	For Each j In arr2
-		For k=0 To 1
-			For l=1 To max
-				nbTotal = nbTotal + 1
-				If (nbTotal Mod nb\100) = 0 Then
-					printw FormatPercent(nbTotal/nb,0)
-				End If
-				ip = i&"."&j&"."&k&"."&l
-				If (Not Ip2Mac.Exists(ip) Or MAC) Then
-					result = wShell.run("cmd /K (ping -n 1 -w 50 "&ip&" || exit /B 0 ) "&Chr(38)&Chr(38)&" arp -a "&ip&" > " & File1 & " "&Chr(38)&" exit",7,True) '(EN) https://msdn.microsoft.com/en-us/library/d5fk67ky(v=vs.84).aspx || (FR) http://jc.bellamy.free.fr/fr/vbsobj/wsmthrun.html
-					' printw "(ping -n 1 -w 100 "&ip&" || exit /B 0 ) "&Chr(38)&Chr(38)&" arp -a "&ip&" > " & File1 & " "&Chr(38)&" exit"
-					If fso.FileExists(File1) Then
-						FileArr = FileReader(File1)
-						For Each fileStr In FileArr
-							If InStr(fileStr,"  "&ip)>0 And InStr(fileStr,"Interface")<1  Then
-								printw "ip: "&i&"."&j&"."&k&"."&l '&vbCrLf&fileStr
-								arp2dict fileStr, True
-								peripheralNb = peripheralNb+1
-							End If
-						Next
-					End If
-				End If
+printw "arr1 : "&UBound(arr1)
+printw "arr2 : "&UBound(arr2)
+printw "arr3 : "&UBound(arr3)
+printw "arr4 : "&UBound(arr4)
+printw "arr2800 : "&UBound(arr2800)
+printw "arr3800 : "&UBound(arr3800)
+printw "arr4800 : "&UBound(arr4800)
+
+
+''''' A boucler
+'nbTotal = nbTotal + 1
+'If (nbTotal Mod nb\100) = 0 Then
+'	printw FormatPercent(nbTotal/nb,0)
+'End If
+'ip = i&"."&j&"."&k&"."&l
+'If (Not Ip2Mac.Exists(ip) Or MAC) Then
+'	result = wShell.run("cmd /K (ping -n 1 -w 50 "&ip&" || exit /B 0 ) "&Chr(38)&Chr(38)&" arp -a "&ip&" > " & File1 & " "&Chr(38)&" exit",7,True) '(EN) https://msdn.microsoft.com/en-us/library/d5fk67ky(v=vs.84).aspx || (FR) http://jc.bellamy.free.fr/fr/vbsobj/wsmthrun.html
+'	' printw "(ping -n 1 -w 100 "&ip&" || exit /B 0 ) "&Chr(38)&Chr(38)&" arp -a "&ip&" > " & File1 & " "&Chr(38)&" exit"
+'	If fso.FileExists(File1) Then
+'		FileArr = FileReader(File1)
+'		For Each fileStr In FileArr
+'			If InStr(fileStr,"  "&ip)>0 And InStr(fileStr,"Interface")<1  Then
+'				printw "ip: "&i&"."&j&"."&k&"."&l '&vbCrLf&fileStr
+'				arp2dict fileStr, True
+'				peripheralNb = peripheralNb+1
+'			End If
+'		Next
+'	End If
+'End If
+
+For i=0 to UBound(arr1)
+	If i<>UBound(arr2800) Then
+		Do while arr2(arr2800(i))-800>=0
+			arr2(arr2800(i)) = arr2(arr2800(i)) - 1
+			For j=arr2800(i)+1 To arr2800(i+1)-1
+				
+				printw "1.1: "&i&"/"& UBound(arr1) & " | " & j & "/" & UBound(arr2) &" | "&i&"/"& UBound(arr2800) & " | "&arr1(i)&"."&arr2(j)&".0.0"
 			Next
-		Next
-	Next
+			'printw "1.2: "&i&"/"& UBound(arr1) & " | " & j & "/" & UBound(arr2) &" | "&i&"/"& UBound(arr2800) & " | "
+		Loop
+		'printw "1.3: "&i&"/"& UBound(arr1) & " | " & j & "/" & UBound(arr2) &" | "&i&"/"& UBound(arr2800) & " | "
+	Else 
+		Do while arr2(arr2800(i))-800>=0
+			arr2(arr2800(i)) = arr2(arr2800(i)) - 1
+			For j=arr2800(i)+1 To UBound(arr2)
+				printw "2.1: "&i&"/"& UBound(arr1) & " | " & j & "/" & UBound(arr2) &" | "&i&"/"& UBound(arr2800) & " | "&arr1(i)&"."&arr2(j)&".0.0"
+			Next
+			'printw "2.2: "&i&"/"& UBound(arr1) & " | " & j & "/" & UBound(arr2) &" | "&i&"/"& UBound(arr2800) & " | "
+		Loop
+		'printw "2.3: "&i&"/"& UBound(arr1) & " | " & j & "/" & UBound(arr2) &" | "&i&"/"& UBound(arr2800) & " | "
+	End If
+	'printw "4: "&i&"/"& UBound(arr1) & " | " & j & "/" & UBound(arr2) &" | "&i&"/"& UBound(arr2800) & " | "
+	
 Next
+'printw "5: "&i&"/"& UBound(arr1) & " | " & j & "/" & UBound(arr2) &" | "&i&"/"& UBound(arr2800) & " | "
+
+'WScript.Quit
 
 printw FormatPercent(nbTotal/nb,0)&" de "&nb
 
