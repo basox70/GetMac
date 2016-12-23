@@ -38,7 +38,7 @@ Set Ip2Mac = CreateObject("Scripting.Dictionary")
 
 ' define address (format arr1[x].arr2[x].0.x)
 arr1=Array(59,99)
-arr2=Array(0,1,7,8,10,12,15)
+arr2=Array(0,1,2,3,4,5,6,7,8,10,12,15)
 peripheralNb = 0
 max = 255
 MAC = false
@@ -189,6 +189,7 @@ Function SortDictionary(objDict)
 			e=3
 			s=0
 			For Each n In Split(X,".")
+				n = Cint(n)
 				s=s+n*256^e
 				e=e-1
 			Next
@@ -221,7 +222,7 @@ Function SortDictionary(objDict)
 	
 End Function
 
-printw "Le script dure environ 10 min."
+printw "Le script dure environ 30 min."
 ' printw "Fin estimee vers "&DateAdd("n",15,FormatDateTime(Now))& "."
 
 Rem BEGINNING / DEBUT TRAITEMENT
@@ -254,6 +255,7 @@ End If
 
 REM BEGIN PING/ARP REQUEST / DEBUT REQUETES PING/ARP
 
+result = wShell.run("cmd /K Date /t > "&File3&" "&Chr(38)&" time /t  >> "&File3&" "&Chr(38)&" exit",7,True)
 nb = ((UBound(arr1)+1)/2)*(UBound(arr2)+1)*25+((UBound(arr1)+1)/2)*(UBound(arr2)+1)*max+((UBound(arr1)+1)/2)*255 'nombre de boucle au total
 nbTotal = 0
 
@@ -302,7 +304,7 @@ For Each i In arr1
 				printw FormatPercent(nbTotal/nb,0)
 			End If
 			If (Not Ip2Mac.Exists(ip) Or MAC) Then
-				result = wShell.run("cmd /K (ping -n 1 -w 50 "&ip&" || exit /B 0 ) "&Chr(38)&Chr(38)&" arp -a "&ip&" > " & File1 & " "&Chr(38)&" exit",7,True) '(EN) https://msdn.microsoft.com/en-us/library/d5fk67ky(v=vs.84).aspx || (FR) http://jc.bellamy.free.fr/fr/vbsobj/wsmthrun.html
+				result = wShell.run("cmd /K (ping -n 1 -w 100 "&ip&" || exit /B 0 ) "&Chr(38)&Chr(38)&" arp -a "&ip&" > " & File1 & " "&Chr(38)&" exit",7,True) '(EN) https://msdn.microsoft.com/en-us/library/d5fk67ky(v=vs.84).aspx || (FR) http://jc.bellamy.free.fr/fr/vbsobj/wsmthrun.html
 				FileReader(File1)
 				If fso.FileExists(File1) Then
 					FileArr = FileReader(File1)
@@ -328,9 +330,9 @@ If fso.FileExists(File1) Then 'supprime le fichier vbstmp
 	fso.deleteFile File1
 End If
 
-If fso.FileExists(File3) Then 'supprime le fichier arpTrie.txt pour éviter d'avoir un fichier de 600 lignes au bout de 3 lancements
-	fso.deleteFile File3
-End If
+'If fso.FileExists(File3) Then 'supprime le fichier arpTrie.txt pour éviter d'avoir un fichier de 600 lignes au bout de 3 lancements
+'	fso.deleteFile File3
+'End If
 
 ' TRI DU DICTIONNAIRE ET ECRITURE DANS LE FICHIER
 ' SORT DICTIONNARY & WRITE INTO FILE
@@ -340,7 +342,7 @@ If Not fso.FileExists(File3) Then
 	fso.CreateTextFile(File3)
 End If
 
-result = wShell.run("cmd /K Date /t > "&File3&" "&Chr(38)&" exit",7,True)
+'result = wShell.run("cmd /K Date /t > "&File3&" "&Chr(38)&" exit",7,True)
 
 For Each elem In Ip2Mac 'formatage de la ligne puis ecriture dans le fichier
 	' printw "!"&Format(elem,11," ")&"!"
@@ -348,5 +350,5 @@ For Each elem In Ip2Mac 'formatage de la ligne puis ecriture dans le fichier
 	' printl "!"&str&"!"
 	FileWriter File3,str
 Next
-
+result = wShell.run("cmd /K time /t >> "&File3&" "&Chr(38)&" exit",7,True)
 result = wShell.run("cmd /K "&File3&" "&Chr(38)&" exit",7,True) 'affiche le fichier final
