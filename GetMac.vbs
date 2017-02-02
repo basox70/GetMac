@@ -21,8 +21,8 @@ Rem wscript.exe //H:wscript
 '                                           '
 '''''''''''''''''''''''''''''''''''''''''''''
 
-debugHelpLoop = false
-debugHelpHelp = false
+debugLoop = false
+debugHelp = false
 
 Rem INITIALIZATION / INITIALISATION
 
@@ -484,7 +484,7 @@ For i=0 to Ubound(arr1)
                                             printw "l : "&l
                                             exit for
                                         end if
-                                        if debugHelp then
+                                        if debugLoop then
                                             printw " 1.1: "&i&"/"&UBound(arr1)&" | "&j&"/"&UBound(arr2)&" | "&k&"/"&UBound(arr3)&" | "&l&"/"&UBound(arr4)&chr(9)&" || "&arr1(i)&"."&arr2(j)&"."&arr3(k)&"."&arr4(l)&chr(9)&" ||"
                                         else
                                             ip = arr1(i)&"."&arr2(j)&"."&arr3(k)&"."&arr4(l)
