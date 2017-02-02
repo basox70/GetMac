@@ -22,7 +22,7 @@ Rem wscript.exe //H:wscript
 '''''''''''''''''''''''''''''''''''''''''''''
 
 debugHelpLoop = false
-debugHelpHelp = true
+debugHelpHelp = false
 
 Rem INITIALIZATION / INITIALISATION
 
