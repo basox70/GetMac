@@ -21,6 +21,9 @@ Rem wscript.exe //H:wscript
 '                                           '
 '''''''''''''''''''''''''''''''''''''''''''''
 
+debugHelpLoop = false
+debugHelpHelp = true
+
 Rem INITIALIZATION / INITIALISATION
 
 Set wShell = WScript.CreateObject("WSCript.shell")
@@ -48,7 +51,7 @@ Set Ip2Mac = CreateObject("Scripting.Dictionary")
 '''
 arr1=Array(59,99)
 arr2=Array(801,0,1,7,8,10,12,15,801,0)
-arr3=Array(808,0)
+arr3=Array(801,0,1,807,0)
 arr4=Array(808,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255)
 
 redim arrTest(2,1)
@@ -87,7 +90,7 @@ if tmp1 = UBound(arr1)+1 Then
     valid1 = true
 End If
 ReDim Preserve arr2800(UBound(arr2800)+1)
-printw "i:"&i&" | tmp1800: "&tmp1800
+if debugHelp then printw "i:"&i&" | tmp1800: "&tmp1800 : a=0
 arr2800(tmp1800) = i-1
 arrTest(0,0)=tmp1
 arrTest(0,1) = arr2800
@@ -116,7 +119,7 @@ if valid1 then
     End If
 End If
 ReDim Preserve arr3800(UBound(arr3800)+1)
-printw "i:"&i&" | tmp2800: "&tmp2800
+if debugHelp=true then printw "i:"&i&" | tmp2800: "&tmp2800 : a=0
 arr3800(tmp2800) = i-1
 arrTest(1,0)=tmp2
 arrTest(1,1) = arr3800
@@ -144,7 +147,7 @@ if valid2 then
     End If
 End If
 ReDim Preserve arr4800(UBound(arr4800)+1)
-printw "i:"&i&" | tmp3800: "&tmp3800
+if debugHelp then printw "i:"&i&" | tmp3800: "&tmp3800 : a=0
 arr4800(tmp3800) = i-1
 arrTest(2,0)=tmp3
 arrTest(2,1) = arr4800
@@ -154,50 +157,49 @@ j = -1
 k = -1
 l = -1
 
-text1 = ""
-text2 = ""
-text3 = ""
+if debugHelp then
+    text1 = ""
+    text2 = ""
+    text3 = ""
 
-for i=0 to 2
-    for j=0 to 1
-            if IsArray(arrTest(i,j)) Then
-                printl "arrTest("&i&","&j&")=("
-                for k=0 to UBound(arrTest(i,j))
-                    printl arrTest(i,j)(k)&","
-                next
-                printw ")"
-            else
-                printw "arrTest("&i&","&j&")=("&arrTest(i,j)&")"
-            end if
+    for i=0 to 2
+        for j=0 to 1
+                if IsArray(arrTest(i,j)) Then
+                    printl "arrTest("&i&","&j&")=("
+                    for k=0 to UBound(arrTest(i,j))
+                        printl arrTest(i,j)(k)&","
+                    next
+                    printw ")"
+                else
+                    printw "arrTest("&i&","&j&")=("&arrTest(i,j)&")"
+                end if
+        next
     next
-next
 
-for each i in arr2800
-    text1 = text1 & i & ","
-Next
-text1 = text1 & "taille table " & UBound(arr2800)
-for each i in arr3800
-    text2 = text2 & i & ","
-Next
-text2 = text2 & "taille table " & UBound(arr3800)
-for each i in arr4800
-    text3 = text3 & i & ","
-Next
-text3 = text3 & "taille table " & UBound(arr4800)
+    for each i in arr2800
+        text1 = text1 & i & ","
+    Next
+    text1 = text1 & "taille table " & UBound(arr2800)
+    for each i in arr3800
+        text2 = text2 & i & ","
+    Next
+    text2 = text2 & "taille table " & UBound(arr3800)
+    for each i in arr4800
+        text3 = text3 & i & ","
+    Next
+    text3 = text3 & "taille table " & UBound(arr4800)
 
-valid = valid1 and valid2 and valid3
-printw (UBound(arr1)+1) & " | " & (UBound(arr2)+1)-(UBound(arr2800)+1) & " | " & (UBound(arr3)+1)-(UBound(arr3800)+1) & " | " & (UBound(arr4)+1)-(UBound(arr4800)+1)
-printw "tmp1 : " & tmp1 & " | tmp2 : " & tmp2 & " | tmp3 : " & tmp3
-printw valid &":"& valid1 & valid2 & valid3
-printw text1
-printw text2
-printw text3
-
+    valid = valid1 and valid2 and valid3
+    printw (UBound(arr1)+1) & " | " & (UBound(arr2)+1)-(UBound(arr2800)+1) & " | " & (UBound(arr3)+1)-(UBound(arr3800)+1) & " | " & (UBound(arr4)+1)-(UBound(arr4800)+1)
+    printw "tmp1 : " & tmp1 & " | tmp2 : " & tmp2 & " | tmp3 : " & tmp3
+    printw valid &":"& valid1 & valid2 & valid3
+    printw text1
+    printw text2
+    printw text3
+end if
 
 
 peripheralNb = 0
-nb = (UBound(arr1)+1)*((UBound(arr2)+1)-(UBound(arr2800)+1))*((UBound(arr3)+1)-(UBound(arr3800)+1))*((UBound(arr4)+1)-(UBound(arr4800)+1)) 'nombre de boucle au total
-printw nb
 MAC = false
 
 FileContentStr = ""
@@ -414,14 +416,15 @@ REM BEGIN PING/ARP REQUEST / DEBUT REQUETES PING/ARP
 
 nbTotal = 0
 
-printw "arr1 : " & UBound(arr1)
-printw "arr2 : " & UBound(arr2)
-printw "arr3 : " & UBound(arr3)
-printw "arr4 : " & UBound(arr4)
-printw "arr2800 : " & UBound(arr2800)
-printw "arr3800 : " & UBound(arr3800)
-printw "arr4800 : " & UBound(arr4800)
-
+if debugHelp then
+    printw "arr1 : " & UBound(arr1)
+    printw "arr2 : " & UBound(arr2)
+    printw "arr3 : " & UBound(arr3)
+    printw "arr4 : " & UBound(arr4)
+    printw "arr2800 : " & UBound(arr2800)
+    printw "arr3800 : " & UBound(arr3800)
+    printw "arr4800 : " & UBound(arr4800)
+end if
 
 ''''' A boucler
 'nbTotal = nbTotal + 1
@@ -443,6 +446,9 @@ printw "arr4800 : " & UBound(arr4800)
 '       Next
 '   End If
 'End If
+
+nb = (UBound(arr1)+1)*((UBound(arr2)+1)-(UBound(arr2800)+1))*((UBound(arr3)+1)-(UBound(arr3800)+1))*((UBound(arr4)+1)-(UBound(arr4800)+1)) or 100'nombre de boucle au total
+printw nb
 
 i = 0
 j = 0
@@ -478,26 +484,29 @@ For i=0 to Ubound(arr1)
                                             printw "l : "&l
                                             exit for
                                         end if
-                                        ip = arr1(i)&"."&arr2(j)&"."&arr3(k)&"."&arr4(l)
-                                        nbTotal = nbTotal + 1
-                                        If (nbTotal Mod nb\100) = 0 Then
-                                           printw FormatPercent(nbTotal/nb,0)
-                                        End If
-                                        If (Not Ip2Mac.Exists(ip) Or MAC) Then
-                                           result = wShell.run("cmd /K (ping -n 1 -w 50 "&ip&" || exit /B 0 ) "&Chr(38)&Chr(38)&" arp -a "&ip&" > " & File1 & " "&Chr(38)&" exit",7,True) '(EN) https://msdn.microsoft.com/en-us/library/d5fk67ky(v=vs.84).aspx || (FR) http://jc.bellamy.free.fr/fr/vbsobj/wsmthrun.html
-                                           ' printw "(ping -n 1 -w 100 "&ip&" || exit /B 0 ) "&Chr(38)&Chr(38)&" arp -a "&ip&" > " & File1 & " "&Chr(38)&" exit"
-                                           If fso.FileExists(File1) Then
-                                               FileArr = FileReader(File1)
-                                               For Each fileStr In FileArr
-                                                   If InStr(fileStr,"  "&ip)>0 And InStr(fileStr,"Interface")<1  Then
-                                                       printw "ip: "&ip '&vbCrLf&fileStr
-                                                       arp2dict fileStr, True
-                                                       peripheralNb = peripheralNb+1
-                                                   End If
-                                               Next
-                                           End If
-                                        End If
-                                        'printw " 1.1: "&i&"/"&UBound(arr1)&" | "&j&"/"&UBound(arr2)&" | "&k&"/"&UBound(arr3)&" | "&l&"/"&UBound(arr4)&chr(9)&" || "&arr1(i)&"."&arr2(j)&"."&arr3(k)&"."&arr4(l)&chr(9)&" ||"
+                                        if debugHelp then
+                                            printw " 1.1: "&i&"/"&UBound(arr1)&" | "&j&"/"&UBound(arr2)&" | "&k&"/"&UBound(arr3)&" | "&l&"/"&UBound(arr4)&chr(9)&" || "&arr1(i)&"."&arr2(j)&"."&arr3(k)&"."&arr4(l)&chr(9)&" ||"
+                                        else
+                                            ip = arr1(i)&"."&arr2(j)&"."&arr3(k)&"."&arr4(l)
+                                            nbTotal = nbTotal + 1
+                                            If (nbTotal Mod nb\100) = 0 Then
+                                               printw FormatPercent(nbTotal/nb,0)
+                                            End If
+                                            If (Not Ip2Mac.Exists(ip) Or MAC) Then
+                                               result = wShell.run("cmd /K (ping -n 1 -w 50 "&ip&" || exit /B 0 ) "&Chr(38)&Chr(38)&" arp -a "&ip&" > " & File1 & " "&Chr(38)&" exit",7,True) '(EN) https://msdn.microsoft.com/en-us/library/d5fk67ky(v=vs.84).aspx || (FR) http://jc.bellamy.free.fr/fr/vbsobj/wsmthrun.html
+                                               ' printw "(ping -n 1 -w 100 "&ip&" || exit /B 0 ) "&Chr(38)&Chr(38)&" arp -a "&ip&" > " & File1 & " "&Chr(38)&" exit"
+                                               If fso.FileExists(File1) Then
+                                                   FileArr = FileReader(File1)
+                                                   For Each fileStr In FileArr
+                                                       If InStr(fileStr,"  "&ip)>0 And InStr(fileStr,"Interface")<1  Then
+                                                           printw "ip: "&ip '&vbCrLf&fileStr
+                                                           arp2dict fileStr, True
+                                                           peripheralNb = peripheralNb+1
+                                                       End If
+                                                   Next
+                                               End If
+                                            End If
+                                        end if
                                     Next
                                 end if
                             next
