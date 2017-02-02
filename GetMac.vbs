@@ -510,7 +510,7 @@ WScript.Quit
 
 printw FormatPercent(nbTotal/nb,0)&" de "&nb
 
-printl peripheralNb&" nouveaux peripheriques trouves base sur :"&vbCrLf
+printl peripheralNb&" nouveaux peripheriques trouves base sur : "
 printw usedFile
 
 If fso.FileExists(File1) Then 'supprime le fichier vbstmp
