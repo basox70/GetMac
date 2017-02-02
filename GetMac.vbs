@@ -25,6 +25,13 @@ Rem INITIALIZATION / INITIALISATION
 
 Set wShell = WScript.CreateObject("WSCript.shell")
 
+
+Set objArgs = WScript.Arguments
+For I = 0 to objArgs.Count - 1
+   WScript.Echo "Argument "&I&" : "&objArgs(I)
+Next
+
+
 ' Get script directory
 ' Recupere le chemin d'execution du script
 Set fso = CreateObject("Scripting.FileSystemObject")
@@ -49,7 +56,7 @@ Set Ip2Mac = CreateObject("Scripting.Dictionary")
 arr1=Array(59,99)
 arr2=Array(801,0,1,7,8,10,12,15,801,0)
 arr3=Array(808,0,100)
-arr4=Array(808,0,1,2,3,4,5)
+arr4=Array(808,0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123,124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142,143,144,145,146,147,148,149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183,184,185,186,187,188,189,190,191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,221,222,223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238,239,240,241,242,243,244,245,246,247,248,249,250,251,252,253,254,255)
 
 redim arrTest(2,1)
 
@@ -75,7 +82,7 @@ arr4800=Array()
 ' verif conditions arr1 - arr2
 for i=0 to UBound(arr2)
     If arr2(i) = 800 or arr2(i) =900 then
-        printw("erreur dans le tableau arr2")
+        printw "erreur dans le tableau arr2"
     End If
     if arr2(i)>800 and arr2(i)<900 then
         ReDim Preserve arr2800(UBound(arr2800)+1)
@@ -103,7 +110,7 @@ arrTest(0,1) = arr2800
 if valid1 then
     for i=0 to UBound(arr3)
         If arr3(i) = 800 or  arr3(i) =900 then
-            printw("erreur dans le tableau arr3")
+            printw "erreur dans le tableau arr3"
         End If
         if  arr3(i)>800 and  arr3(i)<900 then
             ReDim Preserve arr3800(UBound(arr3800) + 1)
@@ -131,7 +138,7 @@ arrTest(1,1) = arr3800
 if valid2 then
     for i=0 to UBound(arr4)
         If arr4(i) = 800 or arr4(i) =900 then
-            printw("erreur dans le tableau arr4")
+            printw "erreur dans le tableau arr4"
         End If
         if arr4(i)>800 and arr4(i)<900 then
             ReDim Preserve arr4800(UBound(arr4800) + 1)
@@ -449,6 +456,7 @@ printw "arr4800 : " & UBound(arr4800)
 '       Next
 '   End If
 'End If
+
 i = 0
 j = 0
 k = 0
@@ -462,65 +470,41 @@ kkk= Ubound(arrTest(1,1))
 ll = arrTest(2,0)-1
 lll= Ubound(arrTest(2,1))
 
-printw Ubound(arr2)
-
 For i=0 to Ubound(arr1)
     for jj = i to jjj
         if jj <> jjj then
             for j=arrTest(0,1)(jj)+1 to arrTest(0,1)(jj+1)
-                printw " 1.1: "&i&"/"&UBound(arr1)&" | "&j&"/"&UBound(arr2)&" | "&k&"/"&UBound(arr3)&" | "&l&"/"&UBound(arr4)&chr(9)&" || "&arr1(i)&"."&arr2(j)&"."&arr3(k)&"."&arr4(l)&chr(9)&" ||"
+                if instr(join(arrTest(0,1),","),j) and j <> Ubound(arr2) then
+                    exit for
+                end if
+                for kk = 0 to kkk
+                    if kk <> kkk then
+                        for k=arrTest(1,1)(kk)+1 to arrTest(1,1)(kk+1)
+                            if (instr(join(arrTest(1,1),","),","&k&",") or instr(join(arrTest(1,1),","),","&k&")")) and k <> Ubound(arr3) then
+                                printw "k : "&k
+                                exit for
+                            end if
+                            for ll = 0 to lll
+                                if ll <> lll then
+                                    for l=arrTest(2,1)(ll)+1 to arrTest(2,1)(ll+1)
+                                        if (instr(join(arrTest(2,1),","),","&l&",") or instr(join(arrTest(2,1),","),","&l&")")) and l <> Ubound(arr4) then
+                                            printw "l : "&l
+                                            exit for
+                                        end if
+                                        ip = arr1(i)&"."&arr2(j)&"."&arr3(k)&"."&arr4(l)
+                                        printw ip
+                                        'printw Ubound(arr4)
+                                        'printw " 1.1: "&i&"/"&UBound(arr1)&" | "&j&"/"&UBound(arr2)&" | "&k&"/"&UBound(arr3)&" | "&l&"/"&UBound(arr4)&chr(9)&" || "&arr1(i)&"."&arr2(j)&"."&arr3(k)&"."&arr4(l)&chr(9)&" ||"
+                                    Next
+                                end if
+                            next
+                        Next
+                    end if
+                next
             next
-            jj = jj+1
         end if
     next
 next
-
-'printw " 1.1:   "&i&"/"&UBound(arr1)&" | "&j&"/"&UBound(arr2)&" | "&k&"/"&UBound(arr3)&" | "&l&"/"&UBound(arr4)&chr(9)&" || "&arr1(i)&"."&arr2(j)&"."&arr3(k)&"."&arr4(l)&chr(9)&" ||"
-
-'For i=0 to UBound(arr1)
-'    Do while jj > 0
-'        j=arrTest(0,1)(Ubound(arrTest(0,1))-jj) + 1
-'        printw j &" avant"
-'        Do while arr2(j) < 700
-'            printw j &" pendant"
-'            If kk > 0 then
-'                printw "kk :"&kk
-'                For k=arr3800(i) + 1 To UBound(arr3)
-'                    If arr4(arr4800(i)) > 800 then
-'                        arr4(arr4800(i)) = arr4(arr4800(i)) - 1
-'                        printw "arr4(arr4800(i)): "&arr4(arr4800(i))
-'                        For l=arr4800(i) + 1 To UBound(arr4)
-'                            ii = ii + 1
-'                            if ii > 300 then
-'                                WScript.Quit
-'                            end if
-'                            printw " 1.1:   "&i&"/"&UBound(arr1)&" | "&j&"/"&UBound(arr2)&" | "&k&"/"&UBound(arr3)&" | "&l&"/"&UBound(arr4)&chr(9)&" || "&arr1(i)&"."&arr2(j)&"."&arr3(k)&"."&arr4(l)&chr(9)&" ||"
-'                        next
-'                    End If
-'                    ll = arrTest(2,0)-1
-'                next
-'                kk = arrTest(1,0)-1
-'                kk = kk - 1
-'            End If
-'            ii = ii + 1
-'            if ii > 300 then
-'                WScript.Quit
-'            end if
-'            printl ii & " |2|  "
-'            if j < 9 then
-'                j = j + 1
-'            end if
-'        Loop
-'        jj = jj - 1
-'        arrTest(0,0) = arrTest(0,0) - 1
-'        ii = ii + 1
-'        if ii > 300 then
-'            WScript.Quit
-'        end if
-'        printl ii & " |3|  "
-'    Loop
-'Next
-
 
 WScript.Quit
 
