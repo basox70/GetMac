@@ -2,8 +2,8 @@
 '                                           '
 '       Script Created by : basox70         '
 '        First Release : 2016/09/29         '
-'        Last Release : 2017/01/30          '
-'        Script Name : getMac.vbs           '
+'        Last Release : 2017/02/06          '
+'        Script Name : GetMac.vbs           '
 '             Version : 1.10                '
 '                                           '
 '''''''''''''''''''''''''''''''''''''''''''''
@@ -39,6 +39,18 @@ strFolder = objFSO.GetParentFolderName(objFile)
 
 Dim Ip2Mac
 Set Ip2Mac = CreateObject("Scripting.Dictionary")
+
+if debugHelp Then
+    if debugLoop then
+        printw "Mode debug : ALL"
+    else
+        printw "Mode debug : Help"
+    end if
+else
+    if debugLoop then
+        printw "Mode debug : Loop"
+    end if
+end if
 
 ' define address (format arr1[x].arr2[x].arr3[x].arr4[x])
 '''
@@ -426,27 +438,6 @@ if debugHelp then
     printw "arr4800 : " & UBound(arr4800)+1
 end if
 
-''''' A boucler
-'nbTotal = nbTotal + 1
-'If (nbTotal Mod nb\100) = 0 Then
-'   printw FormatPercent(nbTotal/nb,0)
-'End If
-'ip = i&"."&j&"."&k&"."&l
-'If (Not Ip2Mac.Exists(ip) Or MAC) Then
-'   result = wShell.run("cmd /K (ping -n 1 -w 50 "&ip&" || exit /B 0 ) "&Chr(38)&Chr(38)&" arp -a "&ip&" > " & File1 & " "&Chr(38)&" exit",7,True) '(EN) https://msdn.microsoft.com/en-us/library/d5fk67ky(v=vs.84).aspx || (FR) http://jc.bellamy.free.fr/fr/vbsobj/wsmthrun.html
-'   ' printw "(ping -n 1 -w 100 "&ip&" || exit /B 0 ) "&Chr(38)&Chr(38)&" arp -a "&ip&" > " & File1 & " "&Chr(38)&" exit"
-'   If fso.FileExists(File1) Then
-'       FileArr = FileReader(File1)
-'       For Each fileStr In FileArr
-'           If InStr(fileStr,"  "&ip)>0 And InStr(fileStr,"Interface")<1  Then
-'               printw "ip: "&i&"."&j&"."&k&"."&l '&vbCrLf&fileStr
-'               arp2dict fileStr, True
-'               peripheralNb = peripheralNb+1
-'           End If
-'       Next
-'   End If
-'End If
-
 nb = (UBound(arr1)+1)*((UBound(arr2)+1)-(UBound(arr2800)+1))*((UBound(arr3)+1)-(UBound(arr3800)+1))*((UBound(arr4)+1)-(UBound(arr4800)+1)) or 100'nombre de boucle au total
 printw nb
 
@@ -456,7 +447,7 @@ k = 0
 l = 0
 
 ii = 0
-jj = arrTest(0,0)-1
+jj = arrTest(0,1)(0)
 jjj= Ubound(arrTest(0,1))
 kk = arrTest(1,0)-1
 kkk= Ubound(arrTest(1,1))
@@ -471,11 +462,7 @@ printw "l:"&l &"|ll:"&ll&"|lll:"&lll
 printw "-----------"
 
 For i=0 to Ubound(arr1)
-    for each jj in arrTest(0,1)
-        'if arr2(jj) > 800 and arr2(jj) < 900 then
-            'do while arr2(jj) > 800
-                for j=arr2(jj+1) to arrTest(0,1)(jj+1)
-
+    
                                     if debugLoop then
                                         printw "-----5-----"
                                         printw "i:"&i
@@ -506,11 +493,6 @@ For i=0 to Ubound(arr1)
                                            End If
                                         End If
                                     end if
-                next
-                arr2(jj) = arr2(jj) - 1
-            'loop
-        'end if
-    next
 next
 
 if debugHelp then printw nbTotal&" / "&nb : a=0
