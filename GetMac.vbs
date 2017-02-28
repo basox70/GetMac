@@ -52,6 +52,7 @@ Else
     End If
 End If
 
+dim arr2(1), arr3(1), arr4(1)
 ' define address (format arr1[x].arr2[x].arr3[x].arr4[x])
 '''
 ' TODO : - arr1 = taille de arr1 doit correspondre au nombre de fois qu'il y a "8xx"|"9xx" dans arr2. exemple (59, 99)
@@ -63,11 +64,12 @@ End If
 '''
 arr1 = Array(59, 99)
 'arr2 = Array(801, 0, 1, 7, 8, 10, 12, 15, 801, 0)
-arr2 = Array(801, 0, 1, 801, 0)
-arr3 = Array(801, 0, 1, 802, 0)
-arr4 = Array(802, 0, 1, 2, 801, 6, 7) ', 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255)
-
-redim arrTest(2, 1)
+arr2(0) = Array(1, 1)
+arr2(1) = Array(0, 1, -1, 0)
+arr3(0) = Array(2, 1)
+arr3(1) = Array(0, 1, -1, 0)
+arr4(0) = Array(2, 1)
+arr4(1) = Array(0, 1, 2, -1, 6, 7) ', 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255)
 
 tmp1 = 0
 tmp2 = 0
@@ -82,88 +84,6 @@ arr2800 = Array()
 arr3800 = Array()
 arr4800 = Array()
 
-' verif conditions arr1 - arr2
-For i = 0 to UBound(arr2)
-    If arr2(i) = 800 Or arr2(i) = 900 Then
-        printw "erreur dans le tableau arr2"
-    End If
-    If arr2(i) > 800 And arr2(i) < 900 Then
-        ReDim Preserve arr2800(UBound(arr2800) + 1)
-        arr2800(tmp1800) = i
-        tmp1800 = tmp1800 + 1
-        j = arr2(i) - 800
-        tmp1 = tmp1 + j
-    End If
-    If arr2(i) > 900 And arr2(i) < 1000 Then
-        j = arr2(i) - 900
-        tmp1 = tmp1 + j
-    End If
-Next
-If tmp1 = UBound(arr1) + 1 Then
-    valid1 = true
-End If
-ReDim Preserve arr2800(UBound(arr2800) + 1)
-If debugHelp Then printw "i:" & i & " | tmp1800: " & tmp1800 : a = 0
-arr2800(tmp1800) = i - 1
-arrTest(0, 0) = tmp1
-arrTest(0, 1) = arr2800
-
-
-' verif conditions arr2 - arr3
-If valid1 Then
-    For i = 0 to UBound(arr3)
-        If arr3(i) = 800 Or  arr3(i) = 900 Then
-            printw "erreur dans le tableau arr3"
-        End If
-        If  arr3(i) > 800 And  arr3(i) < 900 Then
-            ReDim Preserve arr3800(UBound(arr3800) + 1)
-            arr3800(tmp2800) =  i
-            tmp2800 = tmp2800 + 1
-            j =  arr3(i) - 800
-            tmp2 = tmp2 + j
-        End If
-        If  arr3(i) > 900 And  arr3(i) < 1000 Then
-            j =  arr3(i) - 900
-            tmp2 = tmp2 + j
-        End If
-    Next
-    If tmp2 = (UBound(arr2) + 1) - tmp1 Then
-        valid2 = true
-    End If
-End If
-ReDim Preserve arr3800(UBound(arr3800) + 1)
-If debugHelp = true Then printw "i:" & i & " | tmp2800: " & tmp2800 : a = 0
-arr3800(tmp2800) = i - 1
-arrTest(1, 0) = tmp2
-arrTest(1, 1) = arr3800
-
-' verif conditions arr3 - arr4
-If valid2 Then
-    For i = 0 to UBound(arr4)
-        If arr4(i) = 800 Or arr4(i) = 900 Then
-            printw "erreur dans le tableau arr4"
-        End If
-        If arr4(i) > 800 And arr4(i) < 900 Then
-            ReDim Preserve arr4800(UBound(arr4800) + 1)
-            arr4800(tmp3800) = i
-            tmp3800 = tmp3800 + 1
-            j = arr4(i) - 800
-            tmp3 = tmp3 + j
-        End If
-        If arr4(i) > 900 And arr4(i) < 1000 Then
-            j = arr4(i) - 900
-            tmp3 = tmp3 + j
-        End If
-    Next
-    If tmp3 = (UBound(arr3) + 1) - tmp2 Then
-        valid3 = true
-    End If
-End If
-ReDim Preserve arr4800(UBound(arr4800) + 1)
-If debugHelp Then printw "i:" & i & " | tmp3800: " & tmp3800 : a = 0
-arr4800(tmp3800) = i - 1
-arrTest(2, 0) = tmp3
-arrTest(2, 1) = arr4800
 
 i = -1
 j = -1
@@ -175,19 +95,7 @@ If debugHelp Then
     text2 = ""
     text3 = ""
 
-    For i = 0 to 2
-        For j = 0 to 1
-            If IsArray(arrTest(i, j)) Then
-                printl "arrTest(" & i & ", " & j & ") = ("
-                For k = 0 to UBound(arrTest(i, j))
-                    printl arrTest(i, j)(k) & ", "
-                Next
-                printw ")"
-            Else
-                printw "arrTest(" & i & ", " & j & ") = (" & arrTest(i, j) & ")"
-            End If
-        Next
-    Next
+    
 
     For Each i In arr2800
         text1 = text1 & i & ", "
@@ -447,14 +355,6 @@ j = 0
 k = 0
 l = 0
 
-ii = 0
-jj = arrTest(0, 1)(0)
-jjj = Ubound(arrTest(0, 1))
-kk = arrTest(1, 0) - 1
-kkk = Ubound(arrTest(1, 1))
-ll = arrTest(2, 0) - 1
-lll = Ubound(arrTest(2, 1))
-
 printw "-----1-----"
 printw "i:" & i
 printw "j:" & j &"|jj:" & jj & "|jjj:" & jjj
@@ -463,6 +363,7 @@ printw "l:" & l &"|ll:" & ll & "|lll:" & lll
 printw "-----------"
 
 For i = 0 to Ubound(arr1)
+
                                     If debugLoop Then
                                         printw "-----5-----"
                                         printw "i:" & i
