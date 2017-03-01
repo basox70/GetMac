@@ -52,7 +52,7 @@ Else
     End If
 End If
 
-redim arr1, arr2(0), arr2(1), arr3(0), arr3(1), arr4(0), arr4(1)
+redim arr2(1), arr3(1), arr4(1)
 ' define address (format arr1[x].arr2[x].arr3[x].arr4[x])
 '''
 ' TODO : - arr1 = taille de arr1 doit correspondre au nombre de fois qu'il y a "8xx"|"9xx" dans arr2. exemple (59, 99)
@@ -85,16 +85,43 @@ arr3800 = Array()
 arr4800 = Array()
 
 arr = join(arr2(1), "|")
-printw arr
-do while arr2(0)(0) > 0
-    
-loop
-
 do while LEFT(arr, 2) <> "-1"
     arr = Right(arr, len(arr)-1)
 loop
-arr = Right(arr, len(arr)-3)
-printw arr
+arr = Right(arr, len(arr)-3) & "|-1"
+arr = split(arr, "|")
+printw join(arr,";")
+
+For i=Lbound(arr1) To Ubound(arr1) '''' 1 
+    If arr2(0)(0) > 0 Then
+        arr2(0)(0) = arr2(0)(0) - 1 '''' 2
+        For j = Lbound(arr2(1)) To Ubound(arr2(1)) '''' 3
+            If arr2(1)(j) = -1 Then
+                Exit For
+            End If
+            If arr3(0)(0) > 0 Then
+                arr3(0)(0) = arr3(0)(0) - 1 '''' 4
+                For k = Lbound(arr3(1)) To Ubound(arr3(1)) '''' 5
+                    If arr3(1)(k) = -1 Then
+                        Exit For
+                    End If
+                    ip = arr1(i) & "." & arr2(1)(j) & "." & arr3(1)(k) '''' 6
+                    printw ip
+                Next
+            End If
+            If Ubound(arr3(0)) > 1 and arr3(0)(0) < 1 Then
+                arr3(1) = Ritems(arr3(1))
+                printw "arr3(1) : "&join(arr3(1),"_|_")
+            End if
+        Next
+    End If
+    If Ubound(arr2(0)) > 1 and arr2(0)(0) < 1 Then
+        arr2(1) = Ritems(arr2(1))
+        printw "arr2(1) : "&join(arr2(1),"_|_")
+    End If
+Next
+
+
 'Split(line , "|")
 
 wscript.Quit
@@ -206,6 +233,17 @@ End Function
 ' Afficher les parametres du script
 ' Display script parameters
 printw "renouvellement adresses MAC : " & MAC
+
+' Remove items from array
+' retire des objets d'un array
+Function Ritems( arr )
+    Ritems = join(arr, "|")
+    do while LEFT(Ritems, 2) <> "-1"
+        Ritems = Right(Ritems, len(Ritems)-1)
+    loop
+    Ritems = Right(Ritems, len(Ritems)-3) & "|-1"
+    Ritems = split(Ritems, "|")
+End Function
 
 ' Add arp request line into dictionary, without "static" / "dynamic" Or "new" , key = ip, item = mac address
 ' Ajoute la requete arp dans le dictionnaire, sans "statique"/"dynamique"/"new", cle = ip, objet = Mac
