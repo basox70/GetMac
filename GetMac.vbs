@@ -52,7 +52,7 @@ Else
     End If
 End If
 
-dim arr2(1), arr3(1), arr4(1)
+redim arr1, arr2(0), arr2(1), arr3(0), arr3(1), arr4(0), arr4(1)
 ' define address (format arr1[x].arr2[x].arr3[x].arr4[x])
 '''
 ' TODO : - arr1 = taille de arr1 doit correspondre au nombre de fois qu'il y a "8xx"|"9xx" dans arr2. exemple (59, 99)
@@ -65,7 +65,7 @@ dim arr2(1), arr3(1), arr4(1)
 arr1 = Array(59, 99)
 'arr2 = Array(801, 0, 1, 7, 8, 10, 12, 15, 801, 0)
 arr2(0) = Array(1, 1)
-arr2(1) = Array(0, 1, -1, 0)
+arr2(1) = Array(0, 2, -1, 0)
 arr3(0) = Array(2, 1)
 arr3(1) = Array(0, 1, -1, 0)
 arr4(0) = Array(2, 1)
@@ -83,6 +83,22 @@ valid3 = false
 arr2800 = Array()
 arr3800 = Array()
 arr4800 = Array()
+
+arr = join(arr2(1), "|")
+printw arr
+do while arr2(0)(0) > 0
+    
+loop
+
+do while LEFT(arr, 2) <> "-1"
+    arr = Right(arr, len(arr)-1)
+loop
+arr = Right(arr, len(arr)-3)
+printw arr
+'Split(line , "|")
+
+wscript.Quit
+
 
 
 i = -1
@@ -204,7 +220,7 @@ Function arp2dict( ByRef line, newIp)
     tmpIp = Replace(tmpIp, " ", "")
     tmpMac = Right(line, 17)
     tmpMac = Replace(tmpMac, " ", "")
-    If (newIp And Not MAC)Then 
+    If (newIp And Not MAC) Then 
         tmpMac = tmpMac & "  new"
     End If
     line = tmpIp & "|" & tmpMac
@@ -363,7 +379,6 @@ printw "l:" & l &"|ll:" & ll & "|lll:" & lll
 printw "-----------"
 
 For i = 0 to Ubound(arr1)
-
                                     If debugLoop Then
                                         printw "-----5-----"
                                         printw "i:" & i
