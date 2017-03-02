@@ -84,48 +84,84 @@ arr2800 = Array()
 arr3800 = Array()
 arr4800 = Array()
 
-arr = join(arr2(1), "|")
-do while LEFT(arr, 2) <> "-1"
-    arr = Right(arr, len(arr)-1)
-loop
-arr = Right(arr, len(arr)-3) & "|-1"
-arr = split(arr, "|")
-printw join(arr,";")
+' tmp = join(arr, "|")
+' do while LEFT(tmp, 2) <> "-1"
+'     tmp = Right(tmp, len(tmp)-1)
+' loop
+' tmp = Right(tmp, len(tmp)-3)
+' if len(tmp) < 4 Then
+'     tmp = tmp & "|-1"
+' End If
+' tmp = split(tmp, "|")
+
+printw "TypeName(arr2(0)) : "& TypeName(arr2(0))
+printw join(arr2(0),"¤")
+printw "TypeName(arr3(0)) : "& TypeName(arr3(0))
+printw join(arr3(0),"¤")
 
 For i=Lbound(arr1) To Ubound(arr1) '''' 1 
+    printw "--------------------------------------"
+    printw "i : "&i
+    printw "arr2(0)(0) = "&arr2(0)(0) &" > 0"
     If arr2(0)(0) > 0 Then
         arr2(0)(0) = arr2(0)(0) - 1 '''' 2
+        printw "arr2(0)(0) : "&arr2(0)(0)
         For j = Lbound(arr2(1)) To Ubound(arr2(1)) '''' 3
+            printw "j : "&j
+            printw "arr2(1)(j) = " & arr2(1)(j) &" = -1"
             If arr2(1)(j) = -1 Then
                 Exit For
             End If
+            printw "arr3(0)(0) = " & arr3(0)(0) &" > 0"
             If arr3(0)(0) > 0 Then
+                printw "arr3(0)(0) : "&arr3(0)(0)
                 arr3(0)(0) = arr3(0)(0) - 1 '''' 4
+                printw "arr3(0)(0) : "&arr3(0)(0)
                 For k = Lbound(arr3(1)) To Ubound(arr3(1)) '''' 5
+                    printw "arr3(1)(k) = " & arr3(1)(k) &" = -1"
                     If arr3(1)(k) = -1 Then
                         Exit For
                     End If
                     ip = arr1(i) & "." & arr2(1)(j) & "." & arr3(1)(k) '''' 6
-                    printw ip
+                    printw "ip : "&ip
                 Next
             End If
-            If Ubound(arr3(0)) > 1 and arr3(0)(0) < 1 Then
+            printw Ubound(arr3(0))&" > 0 and "&arr3(0)(0)&" < 1 and "&arr3(1)(Ubound(arr3(1)))&" <> -1"
+            If Ubound(arr3(0)) > 0 and arr3(0)(0) < 1 and arr3(1)(Ubound(arr3(1))) <> -1 Then
                 arr3(1) = Ritems(arr3(1))
                 printw "arr3(1) : "&join(arr3(1),"_|_")
             End if
         Next
     End If
-    If Ubound(arr2(0)) > 1 and arr2(0)(0) < 1 Then
+    printw Ubound(arr2(0))&" > 0 and "&arr2(0)(0)&" < 1 and "&arr2(1)(Ubound(arr2(1)))&" <> -1"
+    If Ubound(arr2(0)) > 0 and arr2(0)(0) < 1 and arr2(1)(Ubound(arr2(1))) <> -1 Then
         arr2(1) = Ritems(arr2(1))
         printw "arr2(1) : "&join(arr2(1),"_|_")
     End If
+
+    tmp = join(arr2(0), "|")
+    do while LEFT(tmp, 1) <> "|"
+        tmp = Right(tmp, len(tmp)-1)
+    loop
+    tmp = Right(tmp, len(tmp)-1)
+    arr2(0) = split(tmp, "|")
+    'printw join(arr2(0),"[]")
+    printw "TypeName(arr2(0)) : "& TypeName(arr2(0))
+
+    tmp = join(arr3(0), "|")
+    do while LEFT(tmp, 1) <> "|"
+        tmp = Right(tmp, len(tmp)-1)
+    loop
+    tmp = Right(tmp, len(tmp)-1)
+    arr3(0) = split(tmp, "|")
+    'printw join(arr3(0),"[]")
+    printw "TypeName(arr3(0)) : "& TypeName(arr3(0))
 Next
 
 
 'Split(line , "|")
 
 wscript.Quit
-
 
 
 i = -1
@@ -241,7 +277,10 @@ Function Ritems( arr )
     do while LEFT(Ritems, 2) <> "-1"
         Ritems = Right(Ritems, len(Ritems)-1)
     loop
-    Ritems = Right(Ritems, len(Ritems)-3) & "|-1"
+    Ritems = Right(Ritems, len(Ritems)-3)
+    if len(Ritems) < 4 Then
+        Ritems = Ritems & "|-1"
+    End If
     Ritems = split(Ritems, "|")
 End Function
 
