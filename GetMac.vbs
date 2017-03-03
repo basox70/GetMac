@@ -35,7 +35,7 @@ curDir = fso.GetAbsolutePathName(".")
 strPath = WScript.ScriptFullName
 Set objFSO = CreateObject("Scripting.FileSystemObject")
 Set objFile = objFSO.GetFile(strPath)
-strFolder = objFSO.GetParentFolderName(objFile) 
+strFolder = objFSO.GetParentFolderName(objFile)
 
 Dim Ip2Mac
 Set Ip2Mac = CreateObject("Scripting.Dictionary")
@@ -55,12 +55,7 @@ End If
 redim arr2(1), arr3(1), arr4(1)
 ' define address (format arr1[x].arr2[x].arr3[x].arr4[x])
 '''
-' TODO : - arr1 = taille de arr1 doit correspondre au nombre de fois qu'il y a "8xx"|"9xx" dans arr2. exemple (59, 99)
-'        - arr2 = délimité par "8xx" pour les ip spécIfiques, délimité par "9xx" pour une plage d'ip. exemple : (8xx, 0, 1, 7, 8xx, 50, 53, 56) ou (9xx, 0, 255, 9xx, 0, 100)
-'        - arr3 = délimité par "8xx" pour les ip spécIfiques, délimité par "9xx" pour une plage d'ip. si arr2 délimité par "8xx", le nombre de "8xx" ou "9xx"
-'                 doit correspondre au nombre "d'ip" entre les "8xx". si arr2 délimité par "9xx", le nombre de "8xx"|"9xx" de arr3 doir correspondre au nombre de
-'                 "9xx" dans arr2. exemple : (901, 0, 255, 901, 0, 100, 904, 0, 255) ou (803, 1, 2, 3, 803, 50, 53, 56)
-'        - arr4 = pareil que arr3.
+' TODO : 
 '''
 arr1 = Array(59, 99)
 'arr2 = Array(801, 0, 1, 7, 8, 10, 12, 15, 801, 0)
@@ -84,6 +79,11 @@ arr2800 = Array()
 arr3800 = Array()
 arr4800 = Array()
 
+arr20 = -1000
+arr30 = -1000
+arr40 = -1000
+
+
 ' tmp = join(arr, "|")
 ' do while LEFT(tmp, 2) <> "-1"
 '     tmp = Right(tmp, len(tmp)-1)
@@ -94,68 +94,125 @@ arr4800 = Array()
 ' End If
 ' tmp = split(tmp, "|")
 
-printw "TypeName(arr2(0)) : "& TypeName(arr2(0))
-printw join(arr2(0),"¤")
-printw "TypeName(arr3(0)) : "& TypeName(arr3(0))
-printw join(arr3(0),"¤")
+' printw "TypeName(arr2(0)) : "& TypeName(arr2(0))
+' printw join(arr2(0),"¤")
+' printw "TypeName(arr3(0)) : "& TypeName(arr3(0))
+' printw join(arr3(0),"¤")
 
-For i=Lbound(arr1) To Ubound(arr1) '''' 1 
-    printw "--------------------------------------"
-    printw "i : "&i
-    printw "arr2(0)(0) = "&arr2(0)(0) &" > 0"
+For i=Lbound(arr1) To Ubound(arr1)
+    ' printw "--------------------------------------"
+    ' printw "i : "&i
+    ' printw "arr2(0)(0) = "&arr2(0)(0) &" > 0"
+
     If arr2(0)(0) > 0 Then
-        arr2(0)(0) = arr2(0)(0) - 1 '''' 2
+        arr2(0)(0) = arr2(0)(0) - 1
         printw "arr2(0)(0) : "&arr2(0)(0)
-        For j = Lbound(arr2(1)) To Ubound(arr2(1)) '''' 3
-            printw "j : "&j
-            printw "arr2(1)(j) = " & arr2(1)(j) &" = -1"
-            If arr2(1)(j) = -1 Then
+        For j = Lbound(arr2(1)) To Ubound(arr2(1))
+            ' printw "j : "&j
+            ' printw "arr2(1)(j) = " & arr2(1)(j) &" = -1"
+            If CInt(arr2(1)(j)) = -1 Then
                 Exit For
             End If
-            printw "arr3(0)(0) = " & arr3(0)(0) &" > 0"
+            ' printw "arr3(0)(0) = " & arr3(0)(0) &" > 0"
+
             If arr3(0)(0) > 0 Then
-                printw "arr3(0)(0) : "&arr3(0)(0)
-                arr3(0)(0) = arr3(0)(0) - 1 '''' 4
-                printw "arr3(0)(0) : "&arr3(0)(0)
-                For k = Lbound(arr3(1)) To Ubound(arr3(1)) '''' 5
-                    printw "arr3(1)(k) = " & arr3(1)(k) &" = -1"
-                    If arr3(1)(k) = -1 Then
+                ' printw "arr3(0)(0) : "&arr3(0)(0)
+                if arr2(0)(0) <> arr20 then
+                    printw "arr20 : "&chr(34)&arr20&chr(34)
+                    arr3(0)(0) = arr3(0)(0) - 1
+                    arr20 = arr2(0)(0)
+                    printw "arr20 : "&chr(34)&arr20&chr(34)
+                End If
+                'printw "arr3(0)(0) : "&arr3(0)(0)
+                For k = Lbound(arr3(1)) To Ubound(arr3(1))
+                    ' printw "arr3(1)(k) = " & arr3(1)(k) &" = -1"
+                    If CInt(arr3(1)(k)) <> -1 Then
+
+                        ' printw "arr4(0)(0) = " & arr4(0)(0) &" > 0"
+                        If arr4(0)(0) > 0 Then
+                            If arr3(0)(0) <> arr30 Then
+                                printw "arr30 : "&chr(34)&arr30&chr(34)
+                                arr4(0)(0) = arr4(0)(0) - 1
+                                arr30 = arr3(0)(0)
+                                printw "arr30 : "&chr(34)&arr30&chr(34)
+                            End If
+                            printw "arr4(0)(0) : "&arr4(0)(0)
+                            For l = Lbound(arr4(1)) To Ubound(arr4(1))
+                                ' printw "arr3(1)(k) = " & arr3(1)(k) &" = -1"
+                                If CInt(arr4(1)(l)) <> -1 Then
+
+                                ip = arr1(i) & "." & arr2(1)(j) & "." & arr3(1)(k) & "." & arr4(1)(l)
+                                printw "ip : "&ip
+
+                                Else
+                                    Exit For
+                                End If
+                            Next
+                        End If
+                        ' printw "arr4 === " & Ubound(arr4(0))&" > 0 and "&arr4(0)(0)&" < 1 and "&arr4(1)(Ubound(arr4(1)))&" <> -1"
+                        If Ubound(arr4(0)) > 0 and arr4(0)(0) < 1 and arr4(1)(Ubound(arr4(1))) <> -1 Then
+                            ' printw "arr4(1) B : "&join(arr4(1),"_|_")
+                            arr4(1) = Ritems(arr4(1))
+                            ' printw "arr4(1) A : "&join(arr4(1),"_|_")
+                        End if
+
+                    Else
                         Exit For
                     End If
-                    ip = arr1(i) & "." & arr2(1)(j) & "." & arr3(1)(k) '''' 6
-                    printw "ip : "&ip
                 Next
             End If
-            printw Ubound(arr3(0))&" > 0 and "&arr3(0)(0)&" < 1 and "&arr3(1)(Ubound(arr3(1)))&" <> -1"
+            ' printw "arr3 === "& Ubound(arr3(0))&" > 0 and "&arr3(0)(0)&" < 1 and "&arr3(1)(Ubound(arr3(1)))&" <> -1"
             If Ubound(arr3(0)) > 0 and arr3(0)(0) < 1 and arr3(1)(Ubound(arr3(1))) <> -1 Then
                 arr3(1) = Ritems(arr3(1))
-                printw "arr3(1) : "&join(arr3(1),"_|_")
+                ' printw "arr3(1) : "&join(arr3(1),"_|_")
             End if
         Next
     End If
-    printw Ubound(arr2(0))&" > 0 and "&arr2(0)(0)&" < 1 and "&arr2(1)(Ubound(arr2(1)))&" <> -1"
+    ' printw "arr2 === "& Ubound(arr2(0))&" > 0 and "&arr2(0)(0)&" < 1 and "&arr2(1)(Ubound(arr2(1)))&" <> -1"
     If Ubound(arr2(0)) > 0 and arr2(0)(0) < 1 and arr2(1)(Ubound(arr2(1))) <> -1 Then
         arr2(1) = Ritems(arr2(1))
-        printw "arr2(1) : "&join(arr2(1),"_|_")
+        ' printw "arr2(1) : "&join(arr2(1),"_|_")
     End If
 
-    tmp = join(arr2(0), "|")
-    do while LEFT(tmp, 1) <> "|"
-        tmp = Right(tmp, len(tmp)-1)
-    loop
-    tmp = Right(tmp, len(tmp)-1)
-    arr2(0) = split(tmp, "|")
-    'printw join(arr2(0),"[]")
-    printw "TypeName(arr2(0)) : "& TypeName(arr2(0))
+    ' printw "======================================"
 
-    tmp = join(arr3(0), "|")
-    do while LEFT(tmp, 1) <> "|"
+    if Ubound(arr2(0)) > 0 then
+        tmp = join(arr2(0), "|")
+        do while LEFT(tmp, 1) <> "|"
+            tmp = Right(tmp, len(tmp)-1)
+        loop
         tmp = Right(tmp, len(tmp)-1)
-    loop
-    tmp = Right(tmp, len(tmp)-1)
-    arr3(0) = split(tmp, "|")
-    'printw join(arr3(0),"[]")
-    printw "TypeName(arr3(0)) : "& TypeName(arr3(0))
+        arr2(0) = split(tmp, "|")
+        ' printw join(arr2(0),"[]")
+        ' printw "TypeName(arr2(0)) : "& TypeName(arr2(0))
+        tmp = null
+    end if
+
+    if Ubound(arr3(0)) > 0 then
+        tmp = join(arr3(0), "|")
+        do while LEFT(tmp, 1) <> "|"
+            tmp = Right(tmp, len(tmp)-1)
+        loop
+        tmp = Right(tmp, len(tmp)-1)
+        arr3(0) = split(tmp, "|")
+        ' printw join(arr3(0),"[]")
+        ' printw "TypeName(arr3(0)) : "& TypeName(arr3(0))
+        tmp = null
+    end if
+
+    if Ubound(arr4(0)) > 0 then
+        tmp = join(arr4(0), "|")
+        do while LEFT(tmp, 1) <> "|"
+            tmp = Right(tmp, len(tmp)-1)
+        loop
+        tmp = Right(tmp, len(tmp)-1)
+        arr4(0) = split(tmp, "|")
+        ' printw join(arr4(0),"[]")
+        ' printw "TypeName(arr4(0)) : "& TypeName(arr4(0))
+        tmp = null
+    end if
+
+    ' printw "======================================"
 Next
 
 
@@ -174,7 +231,7 @@ If debugHelp Then
     text2 = ""
     text3 = ""
 
-    
+
 
     For Each i In arr2800
         text1 = text1 & i & ", "
@@ -274,8 +331,10 @@ printw "renouvellement adresses MAC : " & MAC
 ' retire des objets d'un array
 Function Ritems( arr )
     Ritems = join(arr, "|")
+    ' printw "Ritems : "&Ritems
     do while LEFT(Ritems, 2) <> "-1"
         Ritems = Right(Ritems, len(Ritems)-1)
+        ' printw "Ritems : "&Ritems
     loop
     Ritems = Right(Ritems, len(Ritems)-3)
     if len(Ritems) < 4 Then
@@ -286,7 +345,7 @@ End Function
 
 ' Add arp request line into dictionary, without "static" / "dynamic" Or "new" , key = ip, item = mac address
 ' Ajoute la requete arp dans le dictionnaire, sans "statique"/"dynamique"/"new", cle = ip, objet = Mac
-Function arp2dict( ByRef line, newIp) 
+Function arp2dict( ByRef line, newIp)
     line = Replace(line, "dynamique", "")
     line = Replace(line, "statique", "")
     line = Replace(line, "dynamic", "")
@@ -297,31 +356,31 @@ Function arp2dict( ByRef line, newIp)
     tmpIp = Replace(tmpIp, " ", "")
     tmpMac = Right(line, 17)
     tmpMac = Replace(tmpMac, " ", "")
-    If (newIp And Not MAC) Then 
+    If (newIp And Not MAC) Then
         tmpMac = tmpMac & "  new"
     End If
     line = tmpIp & "|" & tmpMac
     tmpArr = Split(line , "|")
     If Not Ip2Mac.Exists(tmpIp) Then
         Ip2Mac.add tmpArr(0), tmpArr(1)
-    End If  
+    End If
 End Function
 
 ' File in parameter is read & put in array "FileContentArr"
 ' Le fichier en param est lu et stocké dans un tableau "FileContentArr"
-Function FileReader(ByRef file) 
+Function FileReader(ByRef file)
     Dim filesys, readfile, contents
     Set filesys = CreateObject("Scripting.FileSystemObject")
     Set readfile = filesys.OpenTextFile(file, 1, False)
     FileContentStr = ""
-    Do While readfile.AtEndOfStream = False 
+    Do While readfile.AtEndOfStream = False
         contents = readfile.ReadLine
         If Len(contents) > 15 Then
-            FileContentStr = FileContentStr & contents & "||" 
+            FileContentStr = FileContentStr & contents & "||"
         End If
-    Loop 
+    Loop
     readfile.Close
-    If Len(FileContentStr) > 2 Then 
+    If Len(FileContentStr) > 2 Then
         FilecontentStr = Left(FilecontentStr, (Len(FilecontentStr) - 2))
     End If
     FileContentArr = Split(FileContentStr , "||")
@@ -330,7 +389,7 @@ End Function
 
 ' Write in a file without new line
 ' Ecrire dans un fichier, sans retour à la ligne
-Function FileWriter(file, data) 
+Function FileWriter(file, data)
     Dim filesys, writefile
     Set filesys = CreateObject("Scripting.FileSystemObject")
     Set writefile = filesys.OpenTextFile(file, 8, True)
@@ -386,13 +445,13 @@ Function SortDictionary(objDict)
             Next
         Next
     End If
-    
+
     objDict.RemoveAll
-    
+
     For X = 0 To UBound(strDict) - 1
         objDict.add strDict(X, 0), strDict(X, 1)
     Next
-    
+
 End Function
 
 printw "Le script dure environ 10 min."
