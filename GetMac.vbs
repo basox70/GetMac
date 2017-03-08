@@ -120,10 +120,6 @@ MAC = false
 FileContentStr = ""
 FileContentArr = ""
 
-' File1 = strFolder & "\vbstmp.txt" 'Temp File read to complete dictionary
-' File2 = strFolder & "\arp.txt" 'Original File to read
-' File3 = strFolder & "\arpTrie.txt" 'Final File
-
 File1 = "vbstmp.txt" 'Temp File read to complete dictionary
 File2 = "arp.txt" 'Original File to read
 File3 = "arpTrie.txt" 'Final File
@@ -139,10 +135,6 @@ Function ForceConsole()
         WScript.Quit
     End If
 End Function
-
-'printw File1
-'printw File2
-'printw File3
 
 Function wait(n)
     WScript.Sleep Int(n * 1000)
@@ -189,10 +181,8 @@ printw "renouvellement adresses MAC : " & MAC
 ' retire des objets d'un array
 Function Ritems( arr )
     Ritems = join(arr, "|")
-    ' printw "Ritems : "&Ritems
     do while LEFT(Ritems, 2) <> "-1"
         Ritems = Right(Ritems, len(Ritems)-1)
-        ' printw "Ritems : "&Ritems
     loop
     Ritems = Right(Ritems, len(Ritems)-3)
     if len(Ritems) < 4 Then
@@ -274,7 +264,6 @@ Function SortDictionary(objDict)
         ReDim strDict(Z, 2)
         Y = 0
         For Each X In objDict.Keys()
-            ' printw X & " : [" & objDict.Item(X) & "]"
             strDict(Y, 0) = X
             strDict(Y, 1) = objDict.Item(X)
             e = 3
@@ -298,7 +287,6 @@ Function SortDictionary(objDict)
                     strDict(Y, 0) = strKey
                     strDict(Y, 1) = strItem
                     strDict(Y, 2) = strValue
-                    ' printw "permut: " & X & "|" & strDict(X, 0) & "|" & strDict(X, 1) & "|" & strDict(X, 2) & " with " & Y & "|" & strDict(Y, 0) & "|" & strDict(Y, 1) & "|" & strDict(Y, 2)
                 End If
             Next
         Next
@@ -312,8 +300,7 @@ Function SortDictionary(objDict)
 
 End Function
 
-printw "Le script dure environ 10 min."
-' printw "Fin estimee vers " & DateAdd("n", 15, FormatDateTime(Now))& "."
+printw "Le script dure environ 15 min."
 
 Rem BEGINNING / DEBUT TRAITEMENT
 
@@ -345,6 +332,9 @@ End If
 
 REM BEGIN PING/ARP REQUEST / DEBUT REQUETES PING/ARP
 
+result = wShell.run("cmd /K Date /t > "&File3&" "&Chr(38)&" exit",7,True)
+result = wShell.run("cmd /K time /t >> "&File3&" "&Chr(38)&" exit",7,True)
+
 nbTotal = 0
 
 If debugHelp Then
@@ -357,7 +347,7 @@ If debugHelp Then
     printw "arr4800 : " & UBound(arr4800) + 1
 End If
 
-nb = arr4(0)(0)*Ubound(arr4(1)) Or 100'nombre de boucle au total
+nb = arr4(0)(0) * (Ubound(arr4(1)) + 1) Or 100'nombre de boucle au total
 printw nb
 
 i = 0
@@ -484,10 +474,6 @@ If fso.FileExists(File1) Then 'supprime le fichier vbstmp
     fso.deleteFile File1
 End If
 
-If fso.FileExists(File3) Then 'supprime le fichier arpTrie.txt pour éviter d'avoir un fichier de 600 lignes au bout de 3 lancements
-    fso.deleteFile File3
-End If
-
 ' TRI DU DICTIONNAIRE ET ECRITURE DANS LE FICHIER
 ' SORT DICTIONNARY & WRITE INTO FILE
 SortDictionary Ip2Mac
@@ -496,13 +482,12 @@ If Not fso.FileExists(File3) Then
     fso.CreateTextFile(File3)
 End If
 
-result = wShell.run("cmd /K Date /t > " & File3 & " " & Chr(38) & " exit", 7, True)
-
 For Each elem In Ip2Mac 'formatage de la ligne puis ecriture dans le fichier
     ' printw "!" & Format(elem, 11, " ") & "!"
     str = "  " & Format(elem, 11, " ") & "        " & Ip2Mac(elem) & vbCrLf
     ' printl "!" & str & "!"
     FileWriter File3, str
 Next
+result = wShell.run("cmd /K time /t >> "&File3&" "&Chr(38)&" exit",7,True)
 
 result = wShell.run("cmd /K " & File3 & " " & Chr(38) & " exit", 7, True) 'affiche le fichier final
