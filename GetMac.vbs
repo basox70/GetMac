@@ -2,9 +2,9 @@
 '                                           '
 '       Script Created by : basox70         '
 '        First Release : 2016/09/29         '
-'        Last Release : 2017/02/06          '
+'        Last Release : 2017/03/08          '
 '        Script Name : GetMac.vbs           '
-'             Version : 1.10                '
+'             Version : 1.23                '
 '                                           '
 '''''''''''''''''''''''''''''''''''''''''''''
 
@@ -69,50 +69,11 @@ arr4(1) = Array(0, 1, 2, 3 , 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 1
 tmp1 = 0
 tmp2 = 0
 tmp3 = 0
-tmp1800 = 0
-tmp2800 = 0
-tmp3800 = 0
-valid1 = false
-valid2 = false
-valid3 = false
-arr2800 = Array()
-arr3800 = Array()
-arr4800 = Array()
 
 i = -1
 j = -1
 k = -1
 l = -1
-
-If debugHelp Then
-    text1 = ""
-    text2 = ""
-    text3 = ""
-
-
-
-    For Each i In arr2800
-        text1 = text1 & i & ", "
-    Next
-    text1 = text1 & "taille table " & UBound(arr2800)
-    For Each i In arr3800
-        text2 = text2 & i & ", "
-    Next
-    text2 = text2 & "taille table " & UBound(arr3800)
-    For Each i In arr4800
-        text3 = text3 & i & ", "
-    Next
-    text3 = text3 & "taille table " & UBound(arr4800)
-
-    valid = valid1 And valid2 And valid3
-    printw (UBound(arr1) + 1) & " | " & (UBound(arr2) + 1) - (UBound(arr2800) + 1) & " | " & (UBound(arr3) + 1) - (UBound(arr3800) + 1) & " | " & (UBound(arr4) + 1) - (UBound(arr4800) + 1)
-    printw "tmp1 : " & tmp1 & " | tmp2 : " & tmp2 & " | tmp3 : " & tmp3
-    printw valid &":"& valid1 & valid2 & valid3
-    printw text1
-    printw text2
-    printw text3
-End If
-
 
 peripheralNb = 0
 MAC = false
@@ -181,11 +142,11 @@ printw "renouvellement adresses MAC : " & MAC
 ' retire des objets d'un array
 Function Ritems( arr )
     Ritems = join(arr, "|")
-    do while LEFT(Ritems, 2) <> "-1"
+    Do While LEFT(Ritems, 2) <> "-1"
         Ritems = Right(Ritems, len(Ritems)-1)
-    loop
+    Loop
     Ritems = Right(Ritems, len(Ritems)-3)
-    if len(Ritems) < 4 Then
+    If len(Ritems) < 4 Then
         Ritems = Ritems & "|-1"
     End If
     Ritems = split(Ritems, "|")
@@ -332,22 +293,24 @@ End If
 
 REM BEGIN PING/ARP REQUEST / DEBUT REQUETES PING/ARP
 
-result = wShell.run("cmd /K Date /t > "&File3&" "&Chr(38)&" exit",7,True)
-result = wShell.run("cmd /K time /t >> "&File3&" "&Chr(38)&" exit",7,True)
+If Not debugLoop Then
+    result = wShell.run("cmd /K Date /t > "&File3&" "&Chr(38)&" exit",7,True)
+    result = wShell.run("cmd /K time /t >> "&File3&" "&Chr(38)&" exit",7,True)
+End If
 
 nbTotal = 0
 
 If debugHelp Then
     printw "arr1 : " & UBound(arr1) + 1
-    printw "arr2 : " & UBound(arr2) + 1
-    printw "arr3 : " & UBound(arr3) + 1
-    printw "arr4 : " & UBound(arr4) + 1
-    printw "arr2800 : " & UBound(arr2800) + 1
-    printw "arr3800 : " & UBound(arr3800) + 1
-    printw "arr4800 : " & UBound(arr4800) + 1
+    printw "arr2(0) : " & UBound(arr2(0)) + 1
+    printw "arr2(1) : " & UBound(arr2(1)) + 1
+    printw "arr3(0) : " & UBound(arr3(0)) + 1
+    printw "arr3(1) : " & UBound(arr3(1)) + 1
+    printw "arr4(0) : " & UBound(arr4(0)) + 1
+    printw "arr4(1) : " & UBound(arr4(1)) + 1
 End If
 
-nb = arr4(0)(0) * (Ubound(arr4(1)) + 1) Or 100'nombre de boucle au total
+nb = arr4(0)(0) * (Ubound(arr4(1)) + 1) Or 100 'nombre de boucle au total
 printw nb
 
 i = 0
@@ -367,9 +330,9 @@ For i=Lbound(arr1) To Ubound(arr1)
     If Ubound(arr2(0)) > 0 and arr2(0)(0) < 1 Then
         arr2(1) = Ritems(arr2(1))
         tmp = join(arr2(0), "|")
-        do while LEFT(tmp, 1) <> "|"
+        Do While LEFT(tmp, 1) <> "|"
             tmp = Right(tmp, len(tmp)-1)
-        loop
+        Loop
         tmp = Right(tmp, len(tmp)-1)
         arr2(0) = split(tmp, "|")
         tmp = null
@@ -385,13 +348,13 @@ For i=Lbound(arr1) To Ubound(arr1)
             If Ubound(arr3(0)) > 0 and arr3(0)(0) < 1 Then
                 arr3(1) = Ritems(arr3(1))
                 tmp = join(arr3(0), "|")
-                do while LEFT(tmp, 1) <> "|"
+                Do While LEFT(tmp, 1) <> "|"
                     tmp = Right(tmp, len(tmp)-1)
-                loop
+                Loop
                 tmp = Right(tmp, len(tmp)-1)
                 arr3(0) = split(tmp, "|")
                 tmp = null
-            End if
+            End If
 
             If arr3(0)(0) > 0 Then
                 arr3(0)(0) = arr3(0)(0) - 1
@@ -443,13 +406,13 @@ For i=Lbound(arr1) To Ubound(arr1)
                         If Ubound(arr4(0)) > 0 and arr4(0)(0) < 1 Then
                             arr4(1) = Ritems(arr4(1))
                             tmp = join(arr4(0), "|")
-                            do while LEFT(tmp, 1) <> "|"
+                            Do While LEFT(tmp, 1) <> "|"
                                 tmp = Right(tmp, len(tmp)-1)
-                            loop
+                            Loop
                             tmp = Right(tmp, len(tmp)-1)
                             arr4(0) = split(tmp, "|")
                             tmp = null
-                        End if
+                        End If
                     Else
                         Exit For
                     End If
