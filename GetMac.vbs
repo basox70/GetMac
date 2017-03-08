@@ -21,8 +21,8 @@ Rem wscript.exe //H:wscript
 '                                           '
 '''''''''''''''''''''''''''''''''''''''''''''
 
-debugLoop = true
-debugHelp = true
+debugLoop = false
+debugHelp = false
 
 Rem INITIALIZATION / INITIALISATION
 
@@ -61,10 +61,10 @@ arr1 = Array(59, 99)
 'arr2 = Array(801, 0, 1, 7, 8, 10, 12, 15, 801, 0)
 arr2(0) = Array(1, 1)
 arr2(1) = Array(0, 1, 7, 8, 10, 12, 15, -1, 0)
-arr3(0) = Array(9, 1)
+arr3(0) = Array(1, 7)
 arr3(1) = Array(0, 1, -1, 0)
-arr4(0) = Array(3)
-arr4(1) = Array(0, 1, 2, 3)' , 4, 5, 6, 7) ', 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255)
+arr4(0) = Array(9)
+arr4(1) = Array(0, 1, 2, 3 , 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255)
 
 tmp1 = 0
 tmp2 = 0
@@ -78,144 +78,6 @@ valid3 = false
 arr2800 = Array()
 arr3800 = Array()
 arr4800 = Array()
-
-arr20 = -1000
-arr30 = -1000
-arr40 = -1000
-
-
-' tmp = join(arr, "|")
-' do while LEFT(tmp, 2) <> "-1"
-'     tmp = Right(tmp, len(tmp)-1)
-' loop
-' tmp = Right(tmp, len(tmp)-3)
-' if len(tmp) < 4 Then
-'     tmp = tmp & "|-1"
-' End If
-' tmp = split(tmp, "|")
-
-' printw "TypeName(arr2(0)) : "& TypeName(arr2(0))
-' printw join(arr2(0),"¤")
-' printw "TypeName(arr3(0)) : "& TypeName(arr3(0))
-' printw join(arr3(0),"¤")
-
-For i=Lbound(arr1) To Ubound(arr1)
-    ' printw "--------------------------------------"
-    ' printw "i : "&i
-    ' printw "arr2(0)(0) = "&arr2(0)(0) &" > 0"
-
-    If arr2(0)(0) > 0 Then
-        arr2(0)(0) = arr2(0)(0) - 1
-        printw "arr2(0)(0) : "&arr2(0)(0)
-        For j = Lbound(arr2(1)) To Ubound(arr2(1))
-            ' printw "j : "&j
-            ' printw "arr2(1)(j) = " & arr2(1)(j) &" = -1"
-            If CInt(arr2(1)(j)) = -1 Then
-                Exit For
-            End If
-            ' printw "arr3(0)(0) = " & arr3(0)(0) &" > 0"
-
-            If arr3(0)(0) > 0 Then
-                ' printw "arr3(0)(0) : "&arr3(0)(0)
-                arr3(0)(0) = arr3(0)(0) - 1
-                'printw "arr3(0)(0) : "&arr3(0)(0)
-                For k = Lbound(arr3(1)) To Ubound(arr3(1))
-                    ' printw "arr3(1)(k) = " & arr3(1)(k) &" = -1"
-                    If CInt(arr3(1)(k)) <> -1 Then
-                        ' printw "arr4(0)(0) = " & arr4(0)(0) &" > 0"
-                        If arr4(0)(0) > 0 Then
-                            If Ubound(arr3(0)) <> arr30 Then
-                                printw "arr30 : "&chr(34)&arr30&chr(34)
-                                ' arr4(0)(0) = arr4(0)(0) - 1
-                                arr30 = Ubound(arr3(0))
-                                printw "arr30 : "&chr(34)&arr30&chr(34)
-                            End If
-                            printw "arr4(0)(0) : "&arr4(0)(0)
-                            For l = Lbound(arr4(1)) To Ubound(arr4(1))
-                                ' printw "arr3(1)(k) = " & arr3(1)(k) &" = -1"
-                                If CInt(arr4(1)(l)) <> -1 Then
-
-                                ip = arr1(i) & "." & arr2(1)(j) & "." & arr3(1)(k) & "." & arr4(1)(l)
-                                printw "ip : "&ip
-
-                                Else
-                                    Exit For
-                                End If
-                            Next
-                        End If
-                        If Ubound(arr4(0)) > 0 and arr4(0)(0) < 1 Then
-                            printw "arr4(1) B : "&join(arr4(1),"_|_")
-                            arr4(1) = Ritems(arr4(1))
-                            printw "arr4(1) A : "&join(arr4(1),"_|_")
-                        End if
-
-                        ' printw "arr4 === " & Ubound(arr4(0))&" > 0 and "&arr4(0)(0)&" < 1 and "&arr4(1)(Ubound(arr4(1)))&" <> -1"
-                    Else
-                        Exit For
-                    End If
-                Next
-            End If
-            ' printw "arr3 === "& Ubound(arr3(0))&" > 0 and "&arr3(0)(0)&" < 1 and "&arr3(1)(Ubound(arr3(1)))&" <> -1"
-            If Ubound(arr3(0)) > 0 and arr3(0)(0) < 1 Then
-                printw "arr3(1) B : "&join(arr3(1),"_|_")
-                arr3(1) = Ritems(arr3(1))
-                printw "arr3(1) A : "&join(arr3(1),"_|_")
-            End if
-        Next
-    End If
-    ' printw "arr2 === "& Ubound(arr2(0))&" > 0 and "&arr2(0)(0)&" < 1 and "&arr2(1)(Ubound(arr2(1)))&" <> -1"
-    If Ubound(arr2(0)) > 0 and arr2(0)(0) < 1 Then
-        printw "arr2(1) B : "&join(arr2(1),"_|_")
-        arr2(1) = Ritems(arr2(1))
-        printw "arr2(1) A : "&join(arr2(1),"_|_")
-    End If
-
-    ' printw "======================================"
-
-    if Ubound(arr2(0)) > 0 then
-        tmp = join(arr2(0), "|")
-        do while LEFT(tmp, 1) <> "|"
-            tmp = Right(tmp, len(tmp)-1)
-        loop
-        tmp = Right(tmp, len(tmp)-1)
-        arr2(0) = split(tmp, "|")
-        ' printw join(arr2(0),"[]")
-        ' printw "TypeName(arr2(0)) : "& TypeName(arr2(0))
-        tmp = null
-    end if
-
-    if Ubound(arr3(0)) > 0 then
-        tmp = join(arr3(0), "|")
-        do while LEFT(tmp, 1) <> "|"
-            tmp = Right(tmp, len(tmp)-1)
-        loop
-        tmp = Right(tmp, len(tmp)-1)
-        arr3(0) = split(tmp, "|")
-        ' printw join(arr3(0),"[]")
-        ' printw "TypeName(arr3(0)) : "& TypeName(arr3(0))
-        tmp = null
-    end if
-
-    if Ubound(arr4(0)) > 0 then
-        tmp = join(arr4(0), "|")
-        do while LEFT(tmp, 1) <> "|"
-            tmp = Right(tmp, len(tmp)-1)
-        loop
-        tmp = Right(tmp, len(tmp)-1)
-        arr4(0) = split(tmp, "|")
-        ' printw join(arr4(0),"[]")
-        ' printw "TypeName(arr4(0)) : "& TypeName(arr4(0))
-        tmp = null
-    end if
-
-    ' printw "======================================"
-Next
-
-
-'Split(line , "|")
-
-wscript.Quit
-
 
 i = -1
 j = -1
@@ -495,33 +357,74 @@ If debugHelp Then
     printw "arr4800 : " & UBound(arr4800) + 1
 End If
 
-nb = (UBound(arr1) + 1) * ((UBound(arr2) + 1) - (UBound(arr2800) + 1)) * ((UBound(arr3) + 1) - (UBound(arr3800) + 1)) * ((UBound(arr4) + 1) - (UBound(arr4800) + 1)) Or 100'nombre de boucle au total
+nb = arr4(0)(0)*Ubound(arr4(1)) Or 100'nombre de boucle au total
 printw nb
 
 i = 0
 j = 0
 k = 0
 l = 0
+If debugLoop Then
+    printw "-----1-----"
+    printw "i:" & i
+    printw "j:" & j &"|jj:" & jj & "|jjj:" & jjj
+    printw "k:" & k &"|kk:" & kk & "|kkk:" & kkk
+    printw "l:" & l &"|ll:" & ll & "|lll:" & lll
+    printw "-----------"
+End If
 
-printw "-----1-----"
-printw "i:" & i
-printw "j:" & j &"|jj:" & jj & "|jjj:" & jjj
-printw "k:" & k &"|kk:" & kk & "|kkk:" & kkk
-printw "l:" & l &"|ll:" & ll & "|lll:" & lll
-printw "-----------"
+For i=Lbound(arr1) To Ubound(arr1)
+    If Ubound(arr2(0)) > 0 and arr2(0)(0) < 1 Then
+        arr2(1) = Ritems(arr2(1))
+        tmp = join(arr2(0), "|")
+        do while LEFT(tmp, 1) <> "|"
+            tmp = Right(tmp, len(tmp)-1)
+        loop
+        tmp = Right(tmp, len(tmp)-1)
+        arr2(0) = split(tmp, "|")
+        tmp = null
+    End If
 
-For i = 0 to Ubound(arr1)
+    If arr2(0)(0) > 0 Then
+        arr2(0)(0) = arr2(0)(0) - 1
+        For j = Lbound(arr2(1)) To Ubound(arr2(1))
+            If CInt(arr2(1)(j)) = -1 Then
+                Exit For
+            End If
+
+            If Ubound(arr3(0)) > 0 and arr3(0)(0) < 1 Then
+                arr3(1) = Ritems(arr3(1))
+                tmp = join(arr3(0), "|")
+                do while LEFT(tmp, 1) <> "|"
+                    tmp = Right(tmp, len(tmp)-1)
+                loop
+                tmp = Right(tmp, len(tmp)-1)
+                arr3(0) = split(tmp, "|")
+                tmp = null
+            End if
+
+            If arr3(0)(0) > 0 Then
+                arr3(0)(0) = arr3(0)(0) - 1
+                For k = Lbound(arr3(1)) To Ubound(arr3(1))
+                    If CInt(arr3(1)(k)) <> -1 Then
+                        If arr4(0)(0) > 0 Then
+                            If Ubound(arr3(0)) <> arr30 Then
+                                arr4(0)(0) = arr4(0)(0) - 1
+                                arr30 = Ubound(arr3(0))
+                            End If
+                            For l = Lbound(arr4(1)) To Ubound(arr4(1))
+                                If CInt(arr4(1)(l)) <> -1 Then
                                     If debugLoop Then
                                         printw "-----5-----"
                                         printw "i:" & i
-                                        printw "j:" & j &"|jj:" & jj & "|jjj:" & jjj
-                                        printw "k:" & k &"|kk:" & kk & "|kkk:" & kkk
-                                        printw "l:" & l &"|ll:" & ll & "|lll:" & lll
+                                        printw "j:" & j
+                                        printw "k:" & k
+                                        printw "l:" & l
                                         printw "-----------"
                                         nbTotal = nbTotal + 1
-                                        printw " 1.1: " & i & "/" & UBound(arr1) & " | " & j & "/" & UBound(arr2) & " | " & k & "/" & UBound(arr3) & " | " & l & "/" & UBound(arr4) & chr(9) & " || " & arr1(i) & "." & arr2(j) & "." & arr3(k) & "." & arr4(l) & chr(9) & " ||"
+                                        printw " 1.1: " & i & "/" & UBound(arr1) & " | " & j & "/" & UBound(arr2(1)) & " | " & k & "/" & UBound(arr3(1)) & " | " & l & "/" & UBound(arr4(1)) & chr(9) & " || " & arr1(i) & "." & arr2(1)(j) & "." & arr3(1)(k) & "." & arr4(1)(l) & chr(9) & " ||"
                                     Else
-                                        ip = arr1(i) & "." & arr2(j) & "." & arr3(k) & "." & arr4(l)
+                                        ip = arr1(i) & "." & arr2(1)(j) & "." & arr3(1)(k) & "." & arr4(1)(l)
                                         nbTotal = nbTotal + 1
                                         If (nbTotal Mod nb\100) = 0 Then
                                            printw FormatPercent(nbTotal/nb, 0)
@@ -541,6 +444,29 @@ For i = 0 to Ubound(arr1)
                                            End If
                                         End If
                                     End If
+
+                                Else
+                                    Exit For
+                                End If
+                            Next
+                        End If
+                        If Ubound(arr4(0)) > 0 and arr4(0)(0) < 1 Then
+                            arr4(1) = Ritems(arr4(1))
+                            tmp = join(arr4(0), "|")
+                            do while LEFT(tmp, 1) <> "|"
+                                tmp = Right(tmp, len(tmp)-1)
+                            loop
+                            tmp = Right(tmp, len(tmp)-1)
+                            arr4(0) = split(tmp, "|")
+                            tmp = null
+                        End if
+                    Else
+                        Exit For
+                    End If
+                Next
+            End If
+        Next
+    End If
 Next
 
 If debugHelp Then printw nbTotal & " / " & nb : a = 0
