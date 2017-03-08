@@ -1,5 +1,5 @@
 # GetMac
-This Script is use to get MAC address for enterprise
+This script is used to get MAC address for enterprise
 
 ## How to:
 
