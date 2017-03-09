@@ -4,7 +4,7 @@
 '        First Release : 2016/09/29         '
 '        Last Release : 2017/03/08          '
 '        Script Name : GetMac.vbs           '
-'             Version : 1.23                '
+'             Version : 1.24                '
 '                                           '
 '''''''''''''''''''''''''''''''''''''''''''''
 
@@ -31,11 +31,6 @@ Set wShell = WScript.CreateObject("WSCript.shell")
 ' Get script directory
 ' Recupere le chemin d'execution du script
 Set fso = CreateObject("Scripting.FileSystemObject")
-curDir = fso.GetAbsolutePathName(".")
-strPath = WScript.ScriptFullName
-Set objFSO = CreateObject("Scripting.FileSystemObject")
-Set objFile = objFSO.GetFile(strPath)
-strFolder = objFSO.GetParentFolderName(objFile)
 
 Dim Ip2Mac
 Set Ip2Mac = CreateObject("Scripting.Dictionary")
@@ -54,26 +49,14 @@ End If
 
 redim arr2(1), arr3(1), arr4(1)
 ' define address (format arr1[x].arr2[x].arr3[x].arr4[x])
-'''
-' TODO : 
-'''
+
 arr1 = Array(59, 99)
-'arr2 = Array(801, 0, 1, 7, 8, 10, 12, 15, 801, 0)
 arr2(0) = Array(1, 1)
 arr2(1) = Array(0, 1, 7, 8, 10, 12, 15, -1, 0)
 arr3(0) = Array(1, 7)
 arr3(1) = Array(0, 1, -1, 0)
 arr4(0) = Array(9)
-arr4(1) = Array(0, 1, 2, 3 , 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255)
-
-tmp1 = 0
-tmp2 = 0
-tmp3 = 0
-
-i = -1
-j = -1
-k = -1
-l = -1
+arr4(1) = Array(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 111, 112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122, 123, 124, 125, 126, 127, 128, 129, 130, 131, 132, 133, 134, 135, 136, 137, 138, 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190, 191, 192, 193, 194, 195, 196, 197, 198, 199, 200, 201, 202, 203, 204, 205, 206, 207, 208, 209, 210, 211, 212, 213, 214, 215, 216, 217, 218, 219, 220, 221, 222, 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255)
 
 peripheralNb = 0
 MAC = false
@@ -84,18 +67,6 @@ FileContentArr = ""
 File1 = "vbstmp.txt" 'Temp File read to complete dictionary
 File2 = "arp.txt" 'Original File to read
 File3 = "arpTrie.txt" 'Final File
-
-Set oWSH = CreateObject("WScript.Shell")
-vbsInterpreter = "cscript.exe"
-
-Call ForceConsole()
-
-Function ForceConsole()
-    If InStr(LCase(WScript.FullName), vbsInterpreter) = 0 Then
-        oWSH.Run vbsInterpreter & " //NoLogo " & Chr(34) & WScript.ScriptFullName & Chr(34)
-        WScript.Quit
-    End If
-End Function
 
 Function wait(n)
     WScript.Sleep Int(n * 1000)
@@ -114,24 +85,23 @@ If WScript.Arguments.Count = 0 Then
 Else
     For I = 0 To WScript.Arguments.Count - 1
         Select Case WScript.Arguments(I)
-        Case "1"
+        Case "/m"
             MAC = true
         Case "/h", "/?", "/help"
             help()
-            Wscript.Quit
         Case Else
             printw "Parametre non reconnu" & vbCrLf
             help()
-            Wscript.Quit
         End Select
     Next
 End If
 
 Function help()
     printw "Parametres:"
-    printw "    - Renouveler adresses MAC : 1 (defaut = 0)"
-    printw "        exemple 'nom du script' 1"
+    printw "    - Renouveler adresses MAC : /m (defaut = 0)"
+    printw "        exemple 'nom du script' /m"
     printw "    - afficher cette aide : /help, /h, /?"
+    Wscript.Quit
 End Function
 
 ' Afficher les parametres du script
@@ -162,16 +132,14 @@ Function arp2dict( ByRef line, newIp)
     line = Replace(line, "new", "")
     line = Replace(line, " ", "")
     tmpIp = Left(line, (Len(line) - 17))
-    tmpIp = Replace(tmpIp, " ", "")
     tmpMac = Right(line, 17)
-    tmpMac = Replace(tmpMac, " ", "")
     If (newIp And Not MAC) Then
         tmpMac = tmpMac & "  new"
     End If
     line = tmpIp & "|" & tmpMac
     tmpArr = Split(line , "|")
     If Not Ip2Mac.Exists(tmpIp) Then
-        Ip2Mac.add tmpArr(0), tmpArr(1)
+        Ip2Mac.add tmpIp, tmpMac
     End If
 End Function
 
@@ -294,11 +262,11 @@ End If
 REM BEGIN PING/ARP REQUEST / DEBUT REQUETES PING/ARP
 
 If Not debugLoop Then
-    result = wShell.run("cmd /K Date /t > "&File3&" "&Chr(38)&" exit",7,True)
-    result = wShell.run("cmd /K time /t >> "&File3&" "&Chr(38)&" exit",7,True)
+    wShell.run "cmd /C Date /t > " & File3 ,7,True
+    wShell.run "cmd /C time /t >> " & File3 ,7,True
 End If
 
-nbTotal = 0
+nb = 0
 
 If debugHelp Then
     printw "arr1 : " & UBound(arr1) + 1
@@ -310,8 +278,8 @@ If debugHelp Then
     printw "arr4(1) : " & UBound(arr4(1)) + 1
 End If
 
-nb = arr4(0)(0) * (Ubound(arr4(1)) + 1) Or 100 'nombre de boucle au total
-printw nb
+nbTotal = arr4(0)(0) * (Ubound(arr4(1)) + 1) - 100 Or 100 'nombre de boucle au total
+printw nbTotal
 
 i = 0
 j = 0
@@ -355,7 +323,6 @@ For i=Lbound(arr1) To Ubound(arr1)
                 arr3(0) = split(tmp, "|")
                 tmp = null
             End If
-
             If arr3(0)(0) > 0 Then
                 arr3(0)(0) = arr3(0)(0) - 1
                 For k = Lbound(arr3(1)) To Ubound(arr3(1))
@@ -367,23 +334,16 @@ For i=Lbound(arr1) To Ubound(arr1)
                             End If
                             For l = Lbound(arr4(1)) To Ubound(arr4(1))
                                 If CInt(arr4(1)(l)) <> -1 Then
+                                    nb = nb + 1
                                     If debugLoop Then
-                                        printw "-----5-----"
-                                        printw "i:" & i
-                                        printw "j:" & j
-                                        printw "k:" & k
-                                        printw "l:" & l
-                                        printw "-----------"
-                                        nbTotal = nbTotal + 1
                                         printw " 1.1: " & i & "/" & UBound(arr1) & " | " & j & "/" & UBound(arr2(1)) & " | " & k & "/" & UBound(arr3(1)) & " | " & l & "/" & UBound(arr4(1)) & chr(9) & " || " & arr1(i) & "." & arr2(1)(j) & "." & arr3(1)(k) & "." & arr4(1)(l) & chr(9) & " ||"
                                     Else
                                         ip = arr1(i) & "." & arr2(1)(j) & "." & arr3(1)(k) & "." & arr4(1)(l)
-                                        nbTotal = nbTotal + 1
-                                        If (nbTotal Mod nb\100) = 0 Then
-                                           printw FormatPercent(nbTotal/nb, 0)
+                                        If (nb Mod nbTotal\100) = 0 Then
+                                           printw FormatPercent(nb/nbTotal, 0)
                                         End If
-                                        If (Not Ip2Mac.Exists(ip) Or MAC) Then
-                                           result = wShell.run("cmd /K (ping -n 1 -w 50 " & ip & " || exit /B 0 ) " & Chr(38) & Chr(38) & " arp -a " & ip & " > " & File1 & " " & Chr(38) & " exit", 7, True) '(EN) https://msdn.microsoft.com/en - us/library/d5fk67ky(v = vs.84).aspx || (FR) http://jc.bellamy.free.fr/fr/vbsobj/wsmthrun.html
+                                        If Not Ip2Mac.Exists(ip) Or MAC Then
+                                           wShell.run "cmd /C (ping -n 1 -w 50 " & ip & " || exit /B 0 ) " & Chr(38) & Chr(38) & " arp -a " & ip & " > " & File1 , 7, True  '(EN) https://msdn.microsoft.com/en - us/library/d5fk67ky(v = vs.84).aspx || (FR) http://jc.bellamy.free.fr/fr/vbsobj/wsmthrun.html
                                            ' printw "(ping -n 1 -w 100 " & ip & " || exit /B 0 ) " & Chr(38) & Chr(38) & " arp -a " & ip & " > " & File1 & " " & Chr(38) & " exit"
                                            If fso.FileExists(File1) Then
                                                FileArr = FileReader(File1)
@@ -397,7 +357,6 @@ For i=Lbound(arr1) To Ubound(arr1)
                                            End If
                                         End If
                                     End If
-
                                 Else
                                     Exit For
                                 End If
@@ -422,14 +381,13 @@ For i=Lbound(arr1) To Ubound(arr1)
     End If
 Next
 
-If debugHelp Then printw nbTotal & " / " & nb : a = 0
+If debugHelp Then printw nb & " / " & nbTotal : a = 0
 
 If debugLoop Then
     WScript.Quit
 End If
 
-printw FormatPercent(nbTotal/nb, 0) & " de " & nb
-
+printw FormatPercent(nb/nbTotal, 0) & " de " & nbTotal
 printl peripheralNb & " nouveaux peripheriques trouves base sur : "
 printw usedFile
 
@@ -451,6 +409,6 @@ For Each elem In Ip2Mac 'formatage de la ligne puis ecriture dans le fichier
     ' printl "!" & str & "!"
     FileWriter File3, str
 Next
-result = wShell.run("cmd /K time /t >> "&File3&" "&Chr(38)&" exit",7,True)
+wShell.run "cmd /C time /t >> "&File3, 7, True
 
-result = wShell.run("cmd /K " & File3 & " " & Chr(38) & " exit", 7, True) 'affiche le fichier final
+wShell.run "cmd /C " & File3 , 7, True 'affiche le fichier final
